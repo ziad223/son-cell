@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول</title>
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/iofrm-style.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/iofrm-theme41.css">
+    <style>
+        input[type="text"], input.form-control {
+            text-align: right;
+            direction: rtl;
+        }
+        .img-holder {
+            width: 50%;
+            height: 100vh;
+            position: absolute;
+            right: 0;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5%;
+            margin-bottom: 100px;
+        }
+        .form-holder{
+            margin-bottom: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-body form-left">
+        <div class="iofrm-layout ">
+            <div class="img-holder"> 
+                <h1 style="size: 100px;">شركة لاينافا للتوظيف</h1>
+                <div class="info-holder">
+                    <img src="./img/img1.png" alt="">
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                        <div class="website-logo-inside logo-normal">
+                            <a href="https://brandio.io/envato/iofrm/html/index.html">
+                                <div class="logo">
+                                    <img class="logo-size" src="./iofrm_files/logo-salpink.svg" alt="">
+                                </div>
+                            </a>
+                        </div>
+                        <h3 class="font-md">أهلا وسهلا بكم في خلية نحل</h3>
+                        <p>يرجى إدخال معلوماتك لتسجيل الدخول</p>
+                        <form id="login-form">
+                            <input class="form-control" type="text" name="mobile" placeholder="رقم الهاتف" required="">
+                            <input class="form-control" type="password" name="password" placeholder="كلمة السر" required="">
+                            <div class="form-button d-flex">
+                                <button id="submit" type="submit" class="btn btn-primary">تسجيل الدخول</button>
+                            </div>
+                        </form>                       
+                        <h6>لا يوجد لديك حساب؟ <a href="signup.html">إنشئ حسابك الآن</a></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SweetAlert2 Script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // عند إرسال النموذج
+            $("#login-form").on("submit", function(e) {
+                e.preventDefault();  // منع إعادة تحميل الصفحة
+
+                var formData = $(this).serialize(); // الحصول على البيانات من النموذج
+
+                // إرسال البيانات عبر AJAX
+                $.ajax({
+    url: "https://highleveltecknology.com/beehive/api/loginWithJWT",  // رابط الـ API
+    type: "POST",
+    data: formData,  // إرسال البيانات
+    success: function(response) {
+        // التحقق من الاستجابة
+        if(response.token) {
+            Swal.fire({
+                title: "تم تسجيل الدخول بنجاح!",
+                text: "مرحباً بك في حسابك.",
+                icon: "success",
+                confirmButtonText: "حسناً"
+            }).then(function() {
+                // حذف التوكين القديم إذا كان موجودًا
+                localStorage.removeItem('token');
+                
+                // تخزين التوكين الجديد
+                localStorage.setItem('token', response.token);
+                localStorage.setItem('userData', JSON.stringify(response));
+
+                // التوجيه إلى صفحة أخرى بعد ثانية
+                setTimeout(function() {
+                    window.location.href = "index.html"; // توجيه إلى صفحة أخرى
+                }, 1000); // الانتظار لمدة 1 ثانية
+            });
+        } else {
+            Swal.fire({
+                title: "فشل تسجيل الدخول!",
+                text: "تأكد من بيانات الدخول.",
+                icon: "error",
+                confirmButtonText: "حاول مرة أخرى"
+            });
+        }
+    },
+    error: function() {
+        Swal.fire({
+            title: "حدث خطأ أثناء تسجيل الدخول.",
+            icon: "error",
+            confirmButtonText: "حاول مرة أخرى",
+            timer: 2000
+        });
+    }
+});
+
+        });
+    });
+    </script>
+</body>
+</html>

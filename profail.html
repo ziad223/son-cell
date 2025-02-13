@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>الملف الشخصي</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      direction: rtl;
+    }
+
+    .profile-container {
+      width: 100%;
+      max-width: 1118px;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 50px;
+    }
+
+    .cover {
+      width: 100%;
+      height: 300px;
+      background: url('img/img1.png') no-repeat center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border: 5px solid white;
+      border-radius: 50%;
+      object-fit: cover;
+      position: absolute;
+      bottom: -75px;
+      right: 30px;
+    }
+
+    .profile-content {
+      padding: 84px 46px 20px 20px;
+      text-align: right;
+    }
+
+    .profile-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .edit-button {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #1877f2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    .edit-button:hover {
+      background-color: #145dbf;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    label.upload-label {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #1877f2;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    label.upload-label:hover {
+      background-color: #145dbf;
+    }
+    .info-parent{
+      width: 50%;
+      margin: auto;
+    }
+    .info{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #eee;
+      padding: 20px;
+      margin: 20px;
+    }
+  </style>
+
+  <!-- Add jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <div class="profile-container">
+    <!-- Cover Section -->
+    <div class="cover">
+      <img id="profile-picture" src="img/img1.png" alt="Profile Picture" class="profile-picture">
+    </div>
+
+    <!-- Profile Content -->
+    <div class="profile-content">
+      <h1 class="profile-name" id="profile-name">م.يوسف سهيل</h1>
+      <label for="profile-input" class="upload-label">تغيير صورة الملف الشخصي</label>
+      <input type="file" id="profile-input" accept="image/*" onchange="uploadProfilePicture(event)">
+    </div>
+    <div class="info-parent d-flex flex-column gap-3 w-50 mx-auto" >
+      <div class="info">
+        <h3>الأسم : </h3>
+        <h3 class="info-name"></h3>
+      </div>
+      <div class="info">
+        <h3>تاريخ الميلاد  : </h3>
+        <h3 class="info-birth_date"></h3>
+      </div>
+      <div class="info">
+        <h3>الرقم القومي : </h3>
+        <h3 class="info-na_number"></h3>
+      </div>
+      <div class="info">
+        <h3>الحالة الأجتماعية : </h3>
+        <h3 class="info-marital_status"></h3>
+      </div>
+      <div class="info">
+        <h3>عدد الأبناء : </h3>
+        <h3 class="info-num_of_children"></h3>
+      </div>
+      <div class="info">
+        <h3>العمر : </h3>
+        <h3 class="info-age"></h3>
+      </div>
+      <div class="info">
+        <h3>رقم التليفون : </h3>
+        <h3 class="info-mobile"></h3>
+      </div>
+      <div class="info">
+        <h3>المؤهل العلمي : </h3>
+        <h3 class="info-Academic_qualification"></h3>
+      </div>
+      <div class="info">
+        <h3>المحافظة : </h3>
+        <h3 class="info-governorate"></h3>
+      </div>
+      <div class="info">
+        <h3>المهنة الحالية  : </h3>
+        <h3 class="info-work"></h3>
+      </div>
+      <div class="info">
+        <h3>المدينة   : </h3>
+        <h3 class="info-city"></h3>
+      </div>
+      <div class="info">
+        <h3>المركز   : </h3>
+        <h3 class="info-center"></h3>
+      </div>
+      <div class="info">
+        <h3>المدينة   : </h3>
+        <h3 class="info-city"></h3>
+      </div>
+    
+      <div class="info">
+        <h3>قرية / شارع   : </h3>
+        <h3 class="info-Village_Street"></h3>
+      </div>
+      <div class="info">
+        <h3> رقم ارضي : </h3>
+        <h3 class="info-landline"></h3>
+      </div>
+
+    
+    </div>
+    
+  </div>
+
+  <script>
+    // Function to upload the profile picture
+    function uploadProfilePicture(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById('profile-picture').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // Function to fetch and display user profile data
+    $(document).ready(function() {
+      const token = localStorage.getItem('token');
+      
+
+      $.ajax({
+        url: 'https://highleveltecknology.com/beehive/api/show_my_account/1',  // The API URL
+        type: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token  // Send the token in the header
+        },
+        success: function(response) {
+          if(response.success) {
+            const userData = JSON.parse(localStorage.getItem('userData')) ;
+              console.log(userData);
+              
+
+            // Update the profile name and image
+            $('#profile-name').text(userData.client.name);
+            $('.info-name').text(userData.client.name);
+            $('.info-birth_date').text(userData.client.birth_date);
+            $('.info-na_number').text(userData.client.na_number);
+            $('.info-gendar').text(userData.client.gender);
+            $('.info-marital_status').text(userData.client.marital_status);
+            $('.info-num_of_children').text(userData.client.num_of_children);
+            $('.info-age').text(userData.client.age);
+            $('.info-mobile').text(userData.client.mobile);
+            $('.info-Academic_qualification').text(userData.client.Academic_qualification);
+            $('.info-governorate').text(userData.client.governorate);
+            $('.info-work').text(userData.client.work);
+            $('.info-city').text(userData.client.city);
+            $('.info-center').text(userData.client.center);
+            $('.info-Village_Street').text(userData.client.Village_Street);
+            $('.info-center').text(userData.client.center);
+            $('.info-landline').text(userData.client.landline);
+            const profileImageUrl = 'https://highleveltecknology.com/beehive/storage/' + userData.client.img;  // Construct the image URL
+            $('#profile-picture').attr('src', profileImageUrl);  // Update profile picture
+          }
+        },
+        error: function(xhr, status, error) {
+          console.error('Error fetching profile data:', error);
+        }
+      });
+    });
+  </script>
+  
+</body>
+</html>

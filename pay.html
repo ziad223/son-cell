@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدفع</title>
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/iofrm-style.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/iofrm-theme41.css">
+    <style>
+        .bottom{
+            width: 100%;
+            height: 100px;
+            color: #ffffff;
+            background-color: #e1b13e;
+            border-radius: 7px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+                
+        }
+
+        .container {
+            display: flex;
+            justify-content: center; /* لتوسيط المربع أفقيًا */
+            align-items: center; /* لتوسيط المربع عموديًا */
+        }
+
+        .box1{
+            width: 750px;
+            height: 700px;
+            color: rgb(255, 255, 255);
+            background-color: #e1b13e;
+            padding: 20px; 
+            border-radius: 7px;
+            display: flex; /* استخدم flexbox لتوسيط المحتوى */
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .h {
+            background-color: #ddd;
+            width: 100%;
+            box-sizing: border-box; /* لتضمين الحواف والتوسيع داخل العرض */
+        }
+
+        form {
+            width: 50%;
+            margin: auto;
+        }
+
+        .pay-img{
+            width: 50px;
+            height: 50px;
+            object-fit: fill;
+        }
+
+        .bottom button {
+            border: #e1b13e;
+            background-color: #e1b13e;
+            color: #ffffff;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+
+        .form-button a {
+            width: 250px;
+            margin-top: 30px;
+        }
+
+        /* Media Query for screens smaller than 768px */
+        @media (max-width: 768px) {
+            form {
+                width: 90%; /* لتوسيع النموذج ليأخذ 90% من العرض على الشاشات الصغيرة */
+            }
+
+            .pay-img {
+                width: 40px; /* تصغير حجم الصور */
+                height: 40px;
+            }
+
+            .bottom button h1 {
+                font-size: 20px; /* تصغير حجم النص في الزر */
+            }
+
+            .h {
+                width: 100%;
+                padding: 10px; /* إضافة padding للمسافة حول المحتوى */
+            }
+
+            .form-group {
+                flex-direction: column; /* جعل العناصر في النموذج عمودية على الشاشات الصغيرة */
+                align-items: center;
+                text-align: center;
+            }
+
+            .d-flex {
+                flex-direction: column;
+            }
+
+            .form-button a {
+                width: 80%; /* جعل الزر يأخذ عرض أكبر في الشاشات الصغيرة */
+            }
+        }
+
+        /* Media Query for screens smaller than 576px */
+        @media (max-width: 576px) {
+            .pay-img {
+                width: 30px; /* تقليل حجم الصور أكثر */
+                height: 30px;
+            }
+
+            .bottom button h1 {
+                font-size: 18px; /* تصغير النص أكثر */
+            }
+
+            .form-button a {
+                width: 100%; /* جعل الزر يأخذ عرض كامل */
+            }
+        }
+    </style>
+    </head>
+    <body>
+       <div>
+        <div class="bottom">
+            <button>
+                <h1><center>الدفع</center></h1>
+            </button>
+        </div>
+       </div>
+
+       <div>
+            <form>
+                <div class="d-flex gap-3 flex-column justify-content-center my-5" dir="rtl">
+                    <div class="form-group p-3 h d-flex justify-content-between align-items-center">
+                        <div class="flex justify-content-between align-items-center gap-3">
+                            <input type="checkbox">
+                            <label for="fawry">الدفع عن طريق فوري</label>
+                        </div>
+                        <img src="./img/fawry.jpg" class="pay-img" alt="pay-img">
+                    </div>
+                    <div class="form-group p-3 h d-flex justify-content-between align-items-center">
+                        <div class="flex justify-content-between align-items-center gap-3">
+                            <input type="checkbox">
+                            <label for="fawry">الدفع عن طريق فيزا كارت</label>
+                        </div>
+                        <div>
+                            <img src="./img/visa.webp" class="pay-img" alt="pay-img">
+                            <img src="./img/master-card.webp" class="pay-img" alt="pay-img">
+                            <img src="./img/miza.jpg" class="pay-img" alt="pay-img">
+                        </div>
+                    </div>
+                    <div class="form-group p-3 h d-flex justify-content-between align-items-center">
+                        <div class="flex justify-content-between align-items-center gap-3">
+                            <input type="checkbox">
+                            <label for="fawry">الدفع عن طريق المحافظ الألكترونية</label>
+                        </div>
+                        <div>
+                            <img src="./img/vodafone.jpg" class="pay-img" alt="pay-img">
+                            <img src="./img/etisalat.jpg" class="pay-img" alt="pay-img">
+                        </div>
+                    </div>
+                    
+                    
+                </div>
+                <div class="form-button d-flex justify-content-center">
+                    <center><a href="Services.html" class="btn btn-outline-primary">ادفع الان</a></center>
+                </div>
+            </form>
+       </div>
+    </body>
+    <script src="./iofrm_files/jquery.min.js.تنزيل"></script>
+    <script src="./iofrm_files/popper.min.js.تنزيل"></script>
+    <script src="./iofrm_files/bootstrap.bundle.min.js.تنزيل"></script>
+    <script src="./iofrm_files/main.js.تنزيل"></script>
+</html>
