@@ -25,8 +25,8 @@
 
   }
         .box1{
-            width: 750px;
-            height: 700px;
+            width: 1150px;
+            height: 800px;
             color: rgb(255, 255, 255);
             background-color: #e1b13e;
             padding: 20px; 
@@ -34,11 +34,31 @@
             justify-content: center;
             align-items: center;
             text-align: center;
+            font-size: 22px;
         }
+        .ss{
+             margin-left: 550px !important;
+        }
+       
+      @media screen and (max-width : 500px) {
+    .box1{
+        width: 95%;
+        margin: auto;
+        font-size: 18px;
+        height: auto; /* هذا هو التعديل */
+    }
+    .z{
+        overflow-x: hidden !important;
+    }
+    .ss{
+        margin-left: 40px !important;
+    }
+}
+
     </style>
     </head>
     <body>
-       <div >
+       <div class="z">
        <div class="bottom">
         <button style="margin-top: 30px ; border: #e1b13e; background-color: #e1b13e; color: #ffffff;margin-left: 44%;">
         <h1 ><center>العقد والتعاقد</center></h1>
@@ -46,9 +66,9 @@
        </div>
        </div>
        <div>
-        <h1><center>بسم الله الرحمن الرحيم</center></h1><br>
+        <h1 class="my-3"><center>بسم الله الرحمن الرحيم</center></h1><br>
         <div class="container">
-         <div class="box1">
+         <div class="box1" style="margin-bottom: 30px;">
             <p>
                 ان هذا العقد ما هو الا كونه شريطه المتعاقدين لحفظ الحقوق لجميع الاطراف 
 يتألف العقد من عدة بنود جميعها للمصلحة العامة والخاصة هدفها ما هو الا حفظ الحقوق للعامة والخاصة ولجميع الاطراف 
@@ -71,11 +91,13 @@
             
             
             <p>بالضغط على التكملة فأنت توافق على شروط الاستخدام!!</p>
-            <div class="form-button d-flex">
-                <center><a href="pay.html" class="btn btn-outline-primary" style="width: 250px; margin-left: 230px; margin-top: 30px;" > أبدأ الطلب</a></center>
-            </div>
+         
          </div>
          
+        </div>
+        <div class="form-button d-flex">
+            <center><a href="pay.html" class="btn btn-outline-primary ss" style="width: 250px; margin-top: 30px; margin: auto; display: block; margin-bottom: 40px;"> أبدأ الطلب</a>
+            </center>
         </div>
        </div>
     </body>

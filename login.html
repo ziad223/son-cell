@@ -16,8 +16,6 @@
         .img-holder {
             width: 50%;
             height: 100vh;
-            position: absolute;
-            right: 0;
         }
 
         img {
@@ -29,6 +27,14 @@
         }
         .form-holder{
             margin-bottom: 500px;
+        }
+         .img-holder{
+              display: block;
+            }
+        @media screen and (max-width : 1024px) {
+            .img-holder{
+              display: none !important;
+            }
         }
     </style>
 </head>
@@ -46,7 +52,7 @@
                     <div class="form-items">
                         <div class="website-logo-inside logo-normal">
                             <a href="https://brandio.io/envato/iofrm/html/index.html">
-                                <div class="logo">
+                                <div class="logo login-logo">
                                     <img class="logo-size" src="./iofrm_files/logo-salpink.svg" alt="">
                                 </div>
                             </a>
