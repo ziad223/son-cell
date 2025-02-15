@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ar">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +27,8 @@
             box-shadow: 0 0 5px rgba(64, 73, 82, 0.5);
         }
 
-        input[type="text"], input.form-control {
+        input[type="text"],
+        input.form-control {
             text-align: right;
             direction: rtl;
         }
@@ -42,16 +44,19 @@
         .form-holder {
             margin-bottom: 500px;
         }
-          .img-holder{
-              display: block;
-            }
-        @media screen and (max-width : 1024px) {
-            .img-holder{
-              display: none !important;
+
+        .img-holder {
+            display: block;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .img-holder {
+                display: none !important;
             }
         }
     </style>
 </head>
+
 <body>
     <div class="form-body form-left">
         <div class="iofrm-layout">
@@ -65,7 +70,7 @@
                 <div class="form-content">
                     <div class="form-items">
                         <div class="website-logo-inside logo-normal">
-                            <a href="https://brandio.io/envato/iofrm/html/index.html">
+                            <a href="#">
                                 <div class="logo">
                                     <img class="logo-size" src="./iofrm_files/logo-salpink.svg" alt="">
                                 </div>
@@ -75,41 +80,50 @@
                         <p>يرجى ادخال معلوماتك الشخصية لانشاء حساب خاص بكم</p>
                         <form id="signup-form" enctype="multipart/form-data">
                             <input class="form-control" type="text" name="name" placeholder="الاسم رباعي" required>
-                            <input class="form-control" type="text" name="email" placeholder="البريد الألكتروني" required>
-                            <input class="form-control" type="date" name="birth_date" placeholder="تاريخ الميلاد" required>
-                            <input class="form-control" type="number" name="na_number" placeholder="الرقم القومي" required>
-                            <select id="gender" name="gender" style="text-align: right; direction: rtl;" required>
+                            <input class="form-control" type="text" name="email" placeholder="البريد الألكتروني"
+                                required>
+                            <input class="form-control" type="date" name="birth_date" required>
+                            <input class="form-control" type="number" name="na_number" placeholder="الرقم القومي"
+                                required>
+                            <select name="gender" required>
                                 <option value="" disabled selected>الجنس</option>
                                 <option value="male">ذكر</option>
                                 <option value="female">أنثى</option>
                             </select>
-                            <select id="marital_status" name="marital_status" style="text-align: right; direction: rtl;" required>
+                            <select name="marital_status" required>
                                 <option value="" disabled selected>الحالة الاجتماعية</option>
                                 <option value="single">أعزب</option>
                                 <option value="married">متزوج</option>
                             </select>
-                            <input class="form-control" type="number" name="num_of_children" placeholder="عدد الابناء" required>
+                            <input class="form-control" type="number" name="num_of_children" placeholder="عدد الابناء"
+                                required>
                             <input class="form-control" type="number" name="age" placeholder="العمر" required>
                             <input class="form-control" type="tel" name="mobile" placeholder="رقم التلفون" required>
-                            <input class="form-control" type="tel" name="another_mobile" placeholder="تليفون اخر" required>
-                            <input class="form-control" type="text" name="Academic_qualification" placeholder=" المؤهل العلمي " required>
+                            <input class="form-control" type="tel" name="another_mobile" placeholder="تليفون اخر"
+                                required>
+                            <input class="form-control" type="text" name="Academic_qualification"
+                                placeholder="المؤهل العلمي" required>
                             <input class="form-control" type="text" name="work" placeholder="المهنة الحالية" required>
-                            <input class="form-control" type="text" name="service_name[]" placeholder=" أسم الخدمة" required>
-                            <input class="form-control" type="number" name="service_cost[]" placeholder="تكلفة الخدمة" required>
+                            <input class="form-control" type="text" name="service_name[]" placeholder="أسم الخدمة"
+                                required>
+                            <input class="form-control" type="number" name="service_cost[]" placeholder="تكلفة الخدمة"
+                                required>
                             <input class="form-control" type="text" name="governorate" placeholder="المحافظة" required>
                             <input class="form-control" type="text" name="city" placeholder="المدينة" required>
                             <input class="form-control" type="text" name="center" placeholder="مركز" required>
-                            <input class="form-control" type="text" name="Village_Street" placeholder="قرية/شارع" required>
-                            <input class="form-control" type="text" name="village_street" placeholder="شارع/قرية" required>
+                            <input class="form-control" type="text" name="Village_Street" placeholder="قرية/شارع"
+                                required>
                             <input class="form-control" type="number" name="landline" placeholder="رقم ارضي" required>
-                            <input class="form-control" type="password" name="password" placeholder="الرقم السري" required>
-                            <!-- إضافة حقل الصورة -->
+                            <input class="form-control" type="password" name="password" placeholder="الرقم السري"
+                                required>
+                            <input class="form-control" type="password" name="confirm_password"
+                                placeholder="إعادة إدخال الرقم السري" required>
                             <input class="form-control" type="file" name="img" accept="image/*" required>
                             <div class="form-button d-flex">
-                                <button id="submit" type="submit" class="btn btn-outline-primary">انشاء حساب</button>
+                                <button id="submit" type="submit" class="btn btn-outline-primary">إنشاء حساب</button>
                             </div>
                         </form>
-                        <h6>هل تملك حساب؟ <a href="login.html">تسجبل الدخول</a></h6>
+                        <h6>هل تملك حساب؟ <a href="login.html">تسجيل الدخول</a></h6>
                     </div>
                 </div>
             </div>
@@ -118,59 +132,58 @@
 
     <!-- SweetAlert2 Script -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-       $(document).ready(function() {
-        // عند إرسال النموذج
-        $("#signup-form").on("submit", function(e) {
-            e.preventDefault();  // منع إعادة تحميل الصفحة
+        $(document).ready(function () {
+            $("#signup-form").on("submit", function (e) {
+                e.preventDefault();
 
-            var formData = new FormData(this); // استخدام FormData لتضمين الملف
+                var formData = new FormData(this);
 
-            // إرسال البيانات عبر AJAX
-            $.ajax({
-                url: "https://highleveltecknology.com/beehive/api/register_client",  // رابط الـ API
-                type: "POST",
-                data: formData,  // إرسال البيانات
-                processData: false,  // لا تحاول تحويل البيانات
-                contentType: false,  // لا تضبط نوع المحتوى لأننا نرسل بيانات متعددة الأجزاء
-                success: function(response) {
-                    // التحقق من الاستجابة
-                    if(response.success) {
+                $.ajax({
+                    url: "https://highleveltecknology.com/beehive/api/register_client",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire({
+                                title: "تم التسجيل بنجاح!",
+                                text: "تم إنشاء حسابك بنجاح.",
+                                icon: "success",
+                                confirmButtonText: "حسناً"
+                            }).then(() => {
+                                window.location.href = "login.html";
+                            });
+                        } else {
+                            let errorMessage = typeof response.errors === 'object' ?
+                                Object.values(response.errors).join('\n') :
+                                response.errors || "حدث خطأ أثناء التسجيل.";
+
+                            Swal.fire({
+                                title: "فشل التسجيل",
+                                text: errorMessage,
+                                icon: "error",
+                                confirmButtonText: "حاول مرة أخرى"
+                            });
+                        }
+                    },
+                    error: function (xhr) {
+                        let errorText = xhr.responseText || "حدث خطأ أثناء الاتصال بالخادم.";
                         Swal.fire({
-                            title: "تم التسجيل بنجاح!",
-                            text: "تم إنشاء حسابك بنجاح.",
-                            icon: "success",
-                            confirmButtonText: "حسناً"
-                        }).then(() => {
-                            // الانتقال إلى صفحة "login.html" بعد 2 ثانية
-                            setTimeout(function() {
-                                window.location.href = "login.html"; // الانتقال إلى الصفحة المطلوبة
-                            }, 2000); // تأخير لمدة 2 ثانية
-                        });
-                    } else {
-                        Swal.fire({
-                            title: "فشل التسجيل",
-                            text: response.errors || "حدث خطأ أثناء التسجيل.",
+                            title: "خطأ",
+                            text: errorText,
                             icon: "error",
                             confirmButtonText: "حاول مرة أخرى"
                         });
                     }
-                },
-                error: function() {
-                    Swal.fire({
-                        title: "خطأ",
-                        text: "حدث خطأ أثناء الاتصال بالخادم.",
-                        icon: "error",
-                        confirmButtonText: "حاول مرة أخرى"
-                    });
-                }
+                });
             });
         });
-    });
     </script>
 </body>
+
 </html>
