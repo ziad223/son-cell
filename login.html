@@ -80,60 +80,87 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // عند إرسال النموذج
-            $("#login-form").on("submit", function(e) {
+            $("#login-form").on("submit", function (e) {
                 e.preventDefault();  // منع إعادة تحميل الصفحة
+
+                var mobile = $("input[name='mobile']").val().trim();
+                var password = $("input[name='password']").val().trim();
+
+                // التحقق من رقم الهاتف
+                var mobileRegex = /^(010|011|012|015)\d{8}$/;
+                if (!mobileRegex.test(mobile)) {
+                    Swal.fire({
+                        title: "رقم الهاتف غير صحيح!",
+                        text: "رقم الهاتف يجب أن يكون 11 رقمًا ويبدأ بـ 010 أو 011 أو 012 أو 015.",
+                        icon: "error",
+                        confirmButtonText: "حسناً"
+                    });
+                    return;
+                }
+
+                // التحقق من كلمة المرور
+                if (password.length < 8) {
+                    Swal.fire({
+                        title: "كلمة السر قصيرة جدًا!",
+                        text: "يجب أن تكون كلمة السر 8 أحرف أو أكثر.",
+                        icon: "error",
+                        confirmButtonText: "حسناً"
+                    });
+                    return;
+                }
 
                 var formData = $(this).serialize(); // الحصول على البيانات من النموذج
 
                 // إرسال البيانات عبر AJAX
                 $.ajax({
-    url: "https://highleveltecknology.com/beehive/api/loginWithJWT",  // رابط الـ API
-    type: "POST",
-    data: formData,  // إرسال البيانات
-    success: function(response) {
-        // التحقق من الاستجابة
-        if(response.token) {
-            Swal.fire({
-                title: "تم تسجيل الدخول بنجاح!",
-                text: "مرحباً بك في حسابك.",
-                icon: "success",
-                confirmButtonText: "حسناً"
-            }).then(function() {
-                // حذف التوكين القديم إذا كان موجودًا
-                localStorage.removeItem('token');
-                
-                // تخزين التوكين الجديد
-                localStorage.setItem('token', response.token);
-                localStorage.setItem('userData', JSON.stringify(response));
+                    url: "https://highleveltecknology.com/beehive/api/loginWithJWT",  // رابط الـ API
+                    type: "POST",
+                    data: formData,  // إرسال البيانات
+                    success: function (response) {
+                        // التحقق من الاستجابة
+                        if (response.token) {
+                            Swal.fire({
+                                title: "تم تسجيل الدخول بنجاح!",
+                                text: "مرحباً بك في حسابك.",
+                                icon: "success",
+                                confirmButtonText: "حسناً"
+                            }).then(function () {
+                                // حذف التوكين القديم إذا كان موجودًا
+                                localStorage.removeItem('token');
 
-                // التوجيه إلى صفحة أخرى بعد ثانية
-                setTimeout(function() {
-                    window.location.href = "index.html"; // توجيه إلى صفحة أخرى
-                }, 1000); // الانتظار لمدة 1 ثانية
-            });
-        } else {
-            Swal.fire({
-                title: "فشل تسجيل الدخول!",
-                text: "تأكد من بيانات الدخول.",
-                icon: "error",
-                confirmButtonText: "حاول مرة أخرى"
-            });
-        }
-    },
-    error: function() {
-        Swal.fire({
-            title: "حدث خطأ أثناء تسجيل الدخول.",
-            icon: "error",
-            confirmButtonText: "حاول مرة أخرى",
-            timer: 2000
-        });
-    }
-});
+                                // تخزين التوكين الجديد
+                                localStorage.setItem('token', response.token);
+                                localStorage.setItem('userData', JSON.stringify(response));
 
+                                // التوجيه إلى صفحة أخرى بعد ثانية
+                                setTimeout(function () {
+                                    window.location.href = "index.html"; // توجيه إلى صفحة أخرى
+                                }, 1000); // الانتظار لمدة 1 ثانية
+                            });
+                        } else {
+                            Swal.fire({
+                                title: "فشل تسجيل الدخول!",
+                                text: "تأكد من بيانات الدخول.",
+                                icon: "error",
+                                confirmButtonText: "حاول مرة أخرى"
+                            });
+                        }
+                    },
+                    error: function () {
+                        Swal.fire({
+                            title: "حدث خطأ أثناء تسجيل الدخول.",
+                            icon: "error",
+                            confirmButtonText: "حاول مرة أخرى",
+                            timer: 2000
+                        });
+                    }
+                });
+
+            });
         });
-    });
     </script>
+
 </body>
 </html>
