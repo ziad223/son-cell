@@ -324,7 +324,7 @@
       if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
-          document.getElementById('profile-picture').src = e.target.result;
+          document.getElementById('profile-picture').src = `highleveltecknology.com/beehive/${e.target.result}`;
         };
         reader.readAsDataURL(file);
       }
@@ -336,7 +336,7 @@
 
 
       $.ajax({
-        url: 'https://highleveltecknology.com/beehive/api/show_my_account/1',  // The API URL
+        url: 'https://highleveltecknology.com/beehive/api/show_my_account/10',  // The API URL
         type: 'GET',
         headers: {
           'Authorization': 'Bearer ' + token  // Send the token in the header
@@ -344,7 +344,7 @@
         success: function (response) {
           if (response.success) {
             const userData = JSON.parse(localStorage.getItem('userData'));
-            console.log(userData);
+            console.log(userData.client.name);
 
 
             // Update the profile name and image
@@ -369,9 +369,13 @@
             $('.personal-info').click(function () {
                $('#orders-container').css('display', 'none');
               $('.info-parent').css('display', 'block');
-            });
+            }); 
+            
 
-            const profileImageUrl = 'https://highleveltecknology.com/beehive/storage/' + userData.client.img;  // Construct the image URL
+
+            const profileImageUrl = 'https://highleveltecknology.com/beehive/' + userData.client.img; 
+            console.log(profileImageUrl);
+            //  // Construct the image URL
             $('#profile-picture').attr('src', profileImageUrl);  // Update profile picture
           }
         },

@@ -71,7 +71,9 @@
             width: 250px;
             margin-top: 30px;
         }
-
+        .pay-button{
+            width: 50%;
+        }
         /* Media Query for screens smaller than 768px */
         @media (max-width: 768px) {
             form {
@@ -105,8 +107,11 @@
             .form-button a {
                 width: 80%; /* جعل الزر يأخذ عرض أكبر في الشاشات الصغيرة */
             }
+            .pay-button{
+                width: 100%;
+            }
         }
-
+      
         /* Media Query for screens smaller than 576px */
         @media (max-width: 576px) {
             .pay-img {
@@ -136,10 +141,10 @@
        <div>
         <div class="d-flex align-items-center justify-content-around mt-5" dir="rtl">
            <p class="fs-4">المبلغ المطلوب دفعه</p>
-           <h2 class="bg-light p-3">2300 ج.م</h2>
+<h2 class="bg-light p-3"><span id="arabic-number"></span> ج.م</h2>
         </div> 
             <form>
-                <div class="d-flex gap-3 flex-column justify-content-center my-5" dir="rtl">
+                <div class="d-flex gap-3 flex-column justify-content-center mt-5" dir="rtl">
                     <div class="form-group p-3 h d-flex justify-content-between align-items-center">
                         <div class="flex justify-content-between align-items-center gap-3">
                             <input type="radio" name="pay">
@@ -171,12 +176,38 @@
                     
                     
                 </div>
-                <div class="form-button d-flex justify-content-center">
-                    <center><a href="Services.html" class="btn btn-outline-primary">ادفع الان</a></center>
+                <div class="form-button d-flex justify-content-center mt-4">
+                        <button type="button" class="btn btn-outline-primary pay-button  justify-content-center mb-5 block fs-5">ادفع الان</button>
                 </div>
+
             </form>
        </div>
     </body>
+    <script>
+          function toArabicNumbers(num) {
+                return num.toString().replace(/\d/g, function (d) {
+                    return '٠١٢٣٤٥٦٧٨٩'.charAt(d);
+                });
+            }
+
+            document.getElementById("arabic-number").textContent = toArabicNumbers(3800);
+
+           const payment_url = localStorage.getItem('payment_url');
+
+            console.log(payment_url);
+
+            const payButton = document.querySelector('.pay-button');
+
+            payButton.addEventListener('click', function () {
+                if (payment_url) {
+                    window.location.href = payment_url;
+                } else {
+                    alert('رابط الدفع غير موجود في localStorage');
+                }
+            });
+
+            
+    </script>
     <script src="./iofrm_files/jquery.min.js.تنزيل"></script>
     <script src="./iofrm_files/popper.min.js.تنزيل"></script>
     <script src="./iofrm_files/bootstrap.bundle.min.js.تنزيل"></script>
