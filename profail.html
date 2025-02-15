@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <title>الملف الشخصي</title>
   <style>
     * {
@@ -92,11 +94,13 @@
     label.upload-label:hover {
       background-color: #145dbf;
     }
-    .info-parent{
+
+    .info-parent {
       width: 50%;
       margin: auto;
     }
-    .info{
+
+    .info {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -105,20 +109,90 @@
       margin: 20px;
     }
 
+    .profile-items {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+     
+      margin-bottom: 20px;
+    }
+
+    .profile-item {
+      background-color: #ddd;
+      padding: 15px;
+      cursor: pointer;
+      margin: 20px 0px;
+      border-radius: 10px;
+      width: 30%;
+      
+    }
+    .profile-item:hover{
+      background-color: #ccc;
+    }
+    .profile-item i{
+      font-size: 20px;
+    }
+     .profile-item span{
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    .info-parent{
+      display: none;
+    }
+    #orders-container{
+      margin-top: 20px;
+      margin-right: 45px;
+      display: none;
+    }
+    .orders-parent{
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+    }
+    .order-card{
+      background-color: #ddd;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 30%;
+
+    }
+    .order-card p{
+      margin: 20px 0px;
+      font-size: 20px;
+    }
+
     @media screen and (max-width : 500px) {
-      .info-parent{
-      width: 90%;
-    }
-    .info h3{
-      font-size: 15px !important;
-    }
-    
+      .info-parent {
+        width: 90%;
+      }
+
+      .info h3 {
+        font-size: 15px !important;
+      }
+      .profile-items{
+        flex-direction: column;
+      }
+       .profile-item{
+        width: 90%;
+        margin: 0;
+      }
+     
+
+
     }
   </style>
 
   <!-- Add jQuery -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
   <div class="profile-container">
     <!-- Cover Section -->
@@ -132,13 +206,40 @@
       <label for="profile-input" class="upload-label">تغيير صورة الملف الشخصي</label>
       <input type="file" id="profile-input" accept="image/*" onchange="uploadProfilePicture(event)">
     </div>
-    <div class="info-parent d-flex flex-column gap-3 w-50 mx-auto" >
+    <div class="profile-items">
+      <div class="d-flex align-items-center profile-item personal-info">
+        <i class="fa-regular fa-circle-user "></i>
+        <span class="text-primary">المعلومات الشخصية</span>
+      </div>
+      <div class="d-flex align-items-center profile-item current-orders">
+        <i class="fa-brands fa-first-order"></i>
+        <span class="text-primary">الطلبات الحالية</span>
+      </div>
+        <!-- <div class="d-flex align-items-center profile-item" id="openModalBtn">
+          <i class="fa-solid fa-circle-plus"></i>
+          <span class="text-primary">طلب جديد</span>
+        </div>
+           <div class="d-flex align-items-center profile-item">
+      <i class="fa-regular fa-circle-xmark"></i>
+        <span class="text-primary"> ألغاء الطلب</span>
+      </div>
+        <div class="d-flex align-items-center profile-item">
+          <i class="fa-solid fa-user-xmark"></i>
+          <span class="text-primary">أغلاق الحساب</span>
+        </div> -->
+          <div class="d-flex align-items-center profile-item">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="text-primary">تسجيل الخروج</span>
+          </div>
+        
+    </div>
+    <div class="info-parent d-flex flex-column gap-3 w-50 mx-auto">
       <div class="info">
         <h3>الأسم : </h3>
         <h3 class="info-name"></h3>
       </div>
       <div class="info">
-        <h3>تاريخ الميلاد  : </h3>
+        <h3>تاريخ الميلاد : </h3>
         <h3 class="info-birth_date"></h3>
       </div>
       <div class="info">
@@ -170,24 +271,24 @@
         <h3 class="info-governorate"></h3>
       </div>
       <div class="info">
-        <h3>المهنة الحالية  : </h3>
+        <h3>المهنة الحالية : </h3>
         <h3 class="info-work"></h3>
       </div>
       <div class="info">
-        <h3>المدينة   : </h3>
+        <h3>المدينة : </h3>
         <h3 class="info-city"></h3>
       </div>
       <div class="info">
-        <h3>المركز   : </h3>
+        <h3>المركز : </h3>
         <h3 class="info-center"></h3>
       </div>
       <div class="info">
-        <h3>المدينة   : </h3>
+        <h3>المدينة : </h3>
         <h3 class="info-city"></h3>
       </div>
-    
+
       <div class="info">
-        <h3>قرية / شارع   : </h3>
+        <h3>قرية / شارع : </h3>
         <h3 class="info-Village_Street"></h3>
       </div>
       <div class="info">
@@ -195,9 +296,17 @@
         <h3 class="info-landline"></h3>
       </div>
 
-    
+
     </div>
-    
+
+    <div id="orders-container">
+     <div class="orders-parent">
+
+     </div>
+    </div>
+ 
+
+
   </div>
 
   <script>
@@ -206,7 +315,7 @@
       const file = event.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
+        reader.onload = function (e) {
           document.getElementById('profile-picture').src = e.target.result;
         };
         reader.readAsDataURL(file);
@@ -214,9 +323,9 @@
     }
 
     // Function to fetch and display user profile data
-    $(document).ready(function() {
+    $(document).ready(function () {
       const token = localStorage.getItem('token');
-      
+
 
       $.ajax({
         url: 'https://highleveltecknology.com/beehive/api/show_my_account/1',  // The API URL
@@ -224,11 +333,11 @@
         headers: {
           'Authorization': 'Bearer ' + token  // Send the token in the header
         },
-        success: function(response) {
-          if(response.success) {
-            const userData = JSON.parse(localStorage.getItem('userData')) ;
-              console.log(userData);
-              
+        success: function (response) {
+          if (response.success) {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            console.log(userData);
+
 
             // Update the profile name and image
             $('#profile-name').text(userData.client.name);
@@ -248,16 +357,74 @@
             $('.info-Village_Street').text(userData.client.Village_Street);
             $('.info-center').text(userData.client.center);
             $('.info-landline').text(userData.client.landline);
+
+            $('.personal-info').click(function () {
+               $('#orders-container').css('display', 'none');
+              $('.info-parent').css('display', 'block');
+            });
+
             const profileImageUrl = 'https://highleveltecknology.com/beehive/storage/' + userData.client.img;  // Construct the image URL
             $('#profile-picture').attr('src', profileImageUrl);  // Update profile picture
           }
         },
-        error: function(xhr, status, error) {
+        error: function (xhr, status, error) {
           console.error('Error fetching profile data:', error);
         }
       });
     });
+
+
+     $(document).ready(function () {
+      const token = localStorage.getItem('token');
+
+        $.ajax({
+          url: 'https://highleveltecknology.com/beehive/api/show_all_my_order/10',
+          method: 'GET',
+           headers: {
+            'Authorization': 'Bearer ' + token  // Send the token in the header
+          },
+          dataType: 'json',
+          success: function (response) {
+            if (response.success) {
+              var ordersHtml = '';
+              response.my_orders.forEach(function (order) {
+                ordersHtml += `
+                                <div class="order-card">
+                                    <p><strong>الخدمة:</strong> ${order.service_name}</p>
+                                    <p><strong>التكلفة:</strong> ${order.service_cost} جنيه</p>
+                                </div>
+                            `;
+              });
+
+              $('.orders-parent').html(ordersHtml);
+            } else {
+              $('.orders-parent').html('<p>حدث خطأ في جلب البيانات.</p>');
+            }
+          },
+          error: function () {
+            $('#orders-container').html('<p>فشل الاتصال بالخادم. حاول مرة أخرى لاحقًا.</p>');
+          }
+        });
+           $('.current-orders').click(function () {
+         $('.info-parent').css('display', 'none');
+            $('#orders-container').css('display', 'block');
+       });
+      });
+
+      $(document).ready(function () {
+          $('.profile-item:has(.fa-right-from-bracket)').click(function () {
+            // حذف التوكين من localStorage
+            localStorage.removeItem('token');
+
+            // التوجيه لصفحة تسجيل الدخول
+            window.location.href = 'login.html';
+          });
+        });
+
+
+   
   </script>
-  
+
 </body>
+
 </html>
