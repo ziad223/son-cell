@@ -108,54 +108,8 @@
 
 
         <div class="card-container">
-            <div class="card">
-                <img src="./img/service-7.jpg" class="mx-auto" alt="Trade">
-                <div class="card-title">تجارة</div>
-            </div>
-            <div class="card">
-                <img src="img/1.png" class="mx-auto"  alt="Agriculture">
-                <div class="card-title">زراعة</div>
-            </div>
-            <div class="card">
-                <img src="img/service-3.jpg" class="mx-auto"  alt="Health">
-                <div class="card-title">صحة</div>
-            </div>
-            <div class="card">
-                <img src="img/service-4.jpg" class="mx-auto"  alt="Industry">
-                <div class="card-title">صناعة</div>
-            </div>
-            <div class="card">
-                <img src="img/service-6.jpg" class="mx-auto"  alt="Work Abroad">
-                <div class="card-title">سفر</div>
-            </div>
-            <div class="card">
-                <img src="img/service-7.jpg" class="mx-auto" alt="Scientific Research">
-                <div class="card-title">بحث علمي</div>
-            </div>
-            <div class="card">
-                <img src="img/service-8.jpg" class="mx-auto" alt="Tourism">
-                <div class="card-title">تعليم</div>
-            </div>
-            <div class="card">
-                <img src="img/service-1.jpg" class="mx-auto" class="mx-auto" alt="Education">
-                <div class="card-title">أستثمار</div>
-            </div>
-            <div class="card">
-                <img src="img/service-10.jpg" class="mx-auto" alt="Technology">
-                <div class="card-title">تأمين </div>
-            </div>
-            <div class="card">
-                <img src="img/service-11.jpg" class="mx-auto" alt="Logistics">
-                <div class="card-title">رياضة</div>
-            </div>
-            <div class="card">
-                <img src="img/service-12.jpg" class="mx-auto" alt="Real Estate">
-                <div class="card-title">لغات</div>
-            </div>
-            <div class="card">
-                <img src="img/service-13.jpg" class="mx-auto" alt="Media">
-                <div class="card-title">نقل</div>
-            </div>
+          
+         
         </div>
         </div>
         
@@ -165,10 +119,94 @@
             </div>
          </div>
     </body>
+
+
+    <script>
+        $(document).ready(function () {
+            const services = [
+                { img: 'img/service-7.jpg', title: 'تجارة' },
+                { img: 'img/1.png', title: 'زراعة' },
+                { img: 'img/service-3.jpg', title: 'صحة' },
+                { img: 'img/service-4.jpg', title: 'صناعة' },
+                { img: 'img/service-6.jpg', title: 'سفر' },
+                { img: 'img/service-7.jpg', title: 'بحث علمي' },
+                { img: 'img/service-8.jpg', title: 'تعليم' },
+                { img: 'img/service-1.jpg', title: 'أستثمار' },
+                { img: 'img/service-10.jpg', title: 'تأمين' },
+                { img: 'img/service-11.jpg', title: 'رياضة' },
+                { img: 'img/service-12.jpg', title: 'لغات' },
+                { img: 'img/service-13.jpg', title: 'نقل' }
+            ];
+
+            const cardContainer = $('.card-container');
+
+            services.map(service => {
+                const cardHtml = `
+                    <div class="card">
+                        <img src="${service.img}" class="mx-auto" alt="${service.title}">
+                        <div class="card-title">${service.title}</div>
+                    </div>
+                `;
+                cardContainer.append(cardHtml);
+            });
+
+            // نفس الاسكريبت اللي بيخلي الكارت يتحدد
+            $(".card-container").on("click", ".card", function () {
+                $(this).toggleClass("selected");
+            });
+        });
+    </script>
+
 <script src="./iofrm_files/jquery.min.js.تنزيل"></script>
 <script src="./iofrm_files/popper.min.js.تنزيل"></script>
 <script src="./iofrm_files/bootstrap.bundle.min.js.تنزيل"></script>
 <script src="./iofrm_files/main.js.تنزيل"></script>
+<script>
+  $(document).ready(function () {
+        const services = [
+            { img: 'img/service-7.jpg', title: 'تجارة' },
+            { img: 'img/1.png', title: 'زراعة' },
+            { img: 'img/service-3.jpg', title: 'صحة' },
+            { img: 'img/service-4.jpg', title: 'صناعة' },
+            { img: 'img/service-6.jpg', title: 'سفر' },
+            { img: 'img/service-7.jpg', title: 'بحث علمي' },
+            { img: 'img/service-8.jpg', title: 'تعليم' },
+            { img: 'img/service-1.jpg', title: 'أستثمار' },
+            { img: 'img/service-10.jpg', title: 'تأمين' },
+            { img: 'img/service-11.jpg', title: 'رياضة' },
+            { img: 'img/service-12.jpg', title: 'لغات' },
+            { img: 'img/service-13.jpg', title: 'نقل' }
+        ];
+
+        const cardContainer = $('.card-container');
+
+        services.map(service => {
+            const cardHtml = `
+            <div class="card">
+                <img src="${service.img}" class="mx-auto" alt="${service.title}">
+                <div class="card-title">${service.title}</div>
+            </div>
+        `;
+            cardContainer.append(cardHtml);
+        });
+
+        $(".card-container").on("click", ".card", function () {
+            const selectedCards = $(".card.selected");
+
+            if ($(this).hasClass("selected")) {
+                // إلغاء تحديد العنصر لو متعلم
+                $(this).removeClass("selected");
+            } else {
+                if (selectedCards.length < 2) {
+                    $(this).addClass("selected");
+                } else {
+                    alert("لا يمكنك اختيار أكثر من خدمتين");
+                }
+            }
+        });
+    });
+
+</script>
 </style><div class="chat-gpt-quick-query-container" style="position: relative; z-index: 2147483647;">
 <div class="css-18jo2e4 ant-app"><div><span></span><span class="ant-dropdown-trigger ant-dropdown-rtl">
 
