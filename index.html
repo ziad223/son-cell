@@ -99,11 +99,29 @@
              <input type="text" class="mt-2 in" placeholder="الأسم رباعي">
 
             <div class="text-center">
-                <a href="page3.html" class="btn btn-custom btn-lg">أبدأ الطلب</a>
+                <a id="startRequestButton" href="#" class="btn btn-custom btn-lg">أبدأ الطلب</a>
             </div>
         </div>
     </div>
+     <script>
+        window.onload = function() {
+    // التحقق من وجود التوكن في localStorage
+    const token = localStorage.getItem("token");
+    const startButton = document.getElementById("startRequestButton");
 
+    // التحقق من حالة التوكن
+    if (token) {
+        // إذا كان هناك توكن، تفعيل الرابط لفتح profile.html
+        startButton.href = "profail.html";
+    } else {
+        // إذا لم يكن هناك توكن، توجيه المستخدم إلى صفحة تسجيل الدخول
+        startButton.addEventListener("click", function() {
+            window.location.href = "page3.html";
+        });
+    }
+};
+
+     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
