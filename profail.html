@@ -363,38 +363,48 @@
          </ul>
          <div class="flex  items-center justify-around  w-full ">
           <button id="closeAccountModalBtn" class="bg-red-500 text-xl h-[40px] cursor-pointer w-[20%] h-[30px] text-white px-4 py-2 rounded">ألغاء</button>
-        <button id="confirmAccountModalBtn" class="bg-green-500 text-xl h-[40px] cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded" id = "showFinishModalBtn">التالي</button>
+<button id="nextFinishModalBtn"
+  class="bg-green-500 text-xl h-[40px] cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded">التالي</button>
          </div>
       </div>
     </div>
 
-    <div id="finishModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
-      <div class="bg-white px-5 w-[90%]   lg:w-[350px] h-[500px]  p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
-        <h2 class="text-2xl font-bold mb-4"> أغلاق الحساب </h2>
-        <form class="w-[80%] flex flex-col gap-5">
-          <div class="flex flex-col gap-3">
-            <label for="name" class="font-semibold text-lg block mb-2">أسم صاحب الحساب</label>
-            <input type="text" placeholder="الأسم رباعي" class="w-full rounded-full   h-[45px] bg-gray-300 outline-none px-4">
-          </div>
-          <div class="flex flex-col gap-3">
-            <label for="name" class="font-semibold text-lg block mb-2">رقم الحساب</label>
-            <input type="text" placeholder="رقم الحساب" class="w-full rounded-full   h-[45px] bg-gray-300 outline-none px-4">
-          </div>
-          <div class="flex flex-col gap-3">
-            <label for="name" class="font-semibold text-lg block mb-2"> رقم الجوال المسجل بالحساب</label>
-            <input type="text" placeholder="رقم الجوال" class="w-full rounded-full   h-[45px] bg-gray-300 outline-none px-4">
-          </div>
-        </form>
-        
-         <div class="flex  items-center justify-around  w-full ">
-          <button id="closeFinishModalBtn" class="bg-red-500 text-xl h-[40px] cursor-pointer w-[20%] h-[30px] text-white px-4 py-2 rounded">ألغاء</button>
-          <button id="confirmAccountModalBtn" class="bg-green-500 text-xl h-[40px] cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded" >التالي</button>
-         </div>
+<div id="finishModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
+  <div
+    class="bg-white px-5 w-[90%] lg:w-[350px] h-[500px] p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
+    <h2 class="text-2xl font-bold mb-4">أغلاق الحساب</h2>
+    <form id="accountClosureForm" class="w-[80%] flex flex-col gap-5">
+      <div class="flex flex-col gap-3">
+        <label for="name" class="font-semibold text-lg block mb-2">أسم صاحب الحساب</label>
+        <input type="text" id="name" placeholder="الأسم رباعي"
+          class="w-full rounded-full h-[45px] bg-gray-300 outline-none px-4">
       </div>
+      <div class="flex flex-col gap-3">
+        <label for="account_number_bank" class="font-semibold text-lg block mb-2">رقم الحساب</label>
+        <input type="text" id="account_number_bank" placeholder="رقم الحساب"
+          class="w-full rounded-full h-[45px] bg-gray-300 outline-none px-4">
+      </div>
+      <div class="flex flex-col gap-3">
+        <label for="mobile_wallet" class="font-semibold text-lg block mb-2">رقم الجوال المسجل بالحساب</label>
+        <input type="text" id="mobile_wallet" placeholder="رقم الجوال"
+          class="w-full rounded-full h-[45px] bg-gray-300 outline-none px-4">
+      </div>
+    </form>
+
+    <div class="flex items-center justify-around w-full">
+      <button id="closeFinishModalBtn"
+        class="bg-red-500 text-xl cursor-pointer w-[20%] h-[30px] text-white px-4 py-2 rounded">ألغاء</button>
+      <button id="submitFinishModalBtn"
+        class="bg-green-500 text-xl cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded">أرسال</button>
+
     </div>
-    
+  </div>
+</div>
 
   </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <script>
     // Function to upload the profile picture
@@ -587,9 +597,75 @@
 });
 
 
+  $(document).ready(function () {
+    // لفتح المودال الثاني بعد الضغط على "التالي" في المودال الأول
+    $('#nextFinishModalBtn').on('click', function () {
+      $('#closeAccountModal').addClass('hidden');
+      $('#finishModal').removeClass('hidden');
+    });
+
+    // زر إلغاء في المودال الثاني
+    $('#closeFinishModalBtn').on('click', function () {
+      $('#finishModal').addClass('hidden');
+    });
+
+    // زر إرسال البيانات في المودال الثاني
+    $('#submitFinishModalBtn').on('click', function (e) {
+      e.preventDefault();
+
+      var name = $('#name').val().trim();
+      var mobile_wallet = $('#mobile_wallet').val().trim();
+      var account_number_bank = $('#account_number_bank').val().trim();
+
+      if (name === '' || mobile_wallet === '' || account_number_bank === '') {
+        Swal.fire({
+          icon: 'warning',
+          title: 'خطأ',
+          text: 'يرجى ملء جميع الحقول',
+        });
+         console.log('Validation failed: empty fields');
+        return;
+      }
+
+       console.log('Sending data...');
+    $.ajax({
+        url: 'https://highleveltecknology.com/beehive/api/inactive_my_account/19',
+        method: 'POST',
+        data: {
+          name: name,
+          mobile_wallet: mobile_wallet,
+          account_number_bank: account_number_bank,
+          status: 'inactive',
+        },
+        success: function (response) {
+          Swal.fire({
+            icon: 'success',
+            title: 'تم الإرسال',
+            text: 'تم إرسال البيانات بنجاح!',
+          });
+          $('#finishModal').addClass('hidden');
+        },
+        error: function (xhr, status, error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'فشل الإرسال',
+            text: 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى.',
+          });
+        },
+      });
+    });
+
+    // زر إلغاء المودال الأول
+    $('#closeAccountModalBtn').on('click', function () {
+      $('#closeAccountModal').addClass('hidden');
+    });
+  });
+
+
 
    
   </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </body>
 
