@@ -139,14 +139,16 @@
                                 // حذف التوكين القديم إذا كان موجودًا
                                 localStorage.removeItem('token');
 
-                                // تخزين التوكين الجديد
                                 localStorage.setItem('token', response.token);
-                                localStorage.setItem('userData', JSON.stringify(response));
+                   localStorage.setItem('userData', JSON.stringify(response));
 
-                                // التوجيه إلى صفحة أخرى بعد ثانية
-                                setTimeout(function () {
-                                    window.location.href = "profail.html"; // توجيه إلى صفحة أخرى
-                                }, 1000); // الانتظار لمدة 1 ثانية
+                   // تحقق من التوكن في الـ localStorage
+                   console.log("Token saved:", localStorage.getItem('token'));
+
+                   setTimeout(function () {
+                       window.location.href = "profail.html"; // التأكد من اسم الصفحة
+                        }, 1000);
+                   
                             });
                         } else {
                             Swal.fire({
