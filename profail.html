@@ -363,7 +363,32 @@
          </ul>
          <div class="flex  items-center justify-around  w-full ">
           <button id="closeAccountModalBtn" class="bg-red-500 text-xl h-[40px] cursor-pointer w-[20%] h-[30px] text-white px-4 py-2 rounded">ألغاء</button>
-        <button id="confirmAccountModalBtn" class="bg-green-500 text-xl h-[40px] cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded">تأكيد</button>
+        <button id="confirmAccountModalBtn" class="bg-green-500 text-xl h-[40px] cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded" id = "showFinishModalBtn">التالي</button>
+         </div>
+      </div>
+    </div>
+
+    <div id="finishModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
+      <div class="bg-white px-5 w-[90%]   lg:w-[350px] h-[500px]  p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
+        <h2 class="text-2xl font-bold mb-4"> أغلاق الحساب </h2>
+        <form class="w-[80%] flex flex-col gap-5">
+          <div class="flex flex-col gap-3">
+            <label for="name" class="font-semibold text-lg block mb-2">أسم صاحب الحساب</label>
+            <input type="text" placeholder="الأسم رباعي" class="w-full rounded-full   h-[45px] bg-gray-300 outline-none px-4">
+          </div>
+          <div class="flex flex-col gap-3">
+            <label for="name" class="font-semibold text-lg block mb-2">رقم الحساب</label>
+            <input type="text" placeholder="رقم الحساب" class="w-full rounded-full   h-[45px] bg-gray-300 outline-none px-4">
+          </div>
+          <div class="flex flex-col gap-3">
+            <label for="name" class="font-semibold text-lg block mb-2"> رقم الجوال المسجل بالحساب</label>
+            <input type="text" placeholder="رقم الجوال" class="w-full rounded-full   h-[45px] bg-gray-300 outline-none px-4">
+          </div>
+        </form>
+        
+         <div class="flex  items-center justify-around  w-full ">
+          <button id="closeFinishModalBtn" class="bg-red-500 text-xl h-[40px] cursor-pointer w-[20%] h-[30px] text-white px-4 py-2 rounded">ألغاء</button>
+          <button id="confirmAccountModalBtn" class="bg-green-500 text-xl h-[40px] cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded" >التالي</button>
          </div>
       </div>
     </div>
@@ -487,12 +512,12 @@
           });
         });
 
-
         $(document).ready(function() {
   // تأكد من أن جميع المودالات مخفية عند تحميل الصفحة
   $('#myModal').addClass('hidden');
   $('#cancelModal').addClass('hidden');
   $('#closeAccountModal').addClass('hidden');
+  $('#finishModal').addClass('hidden'); // تأكد من أن مودال "finishModal" مخفي
 
   // عندما يتم الضغط على الزر الأول (طلب جديد)
   $('#openModalBtn').click(function() {
@@ -524,6 +549,17 @@
     $('#closeAccountModal').addClass('hidden'); // إخفاء المودال الثالث
   });
 
+  // عندما يتم الضغط على زر التالي في المودال الثالث
+  $('#confirmAccountModalBtn').click(function() {
+    $('#closeAccountModal').addClass('hidden'); // إخفاء المودال الثالث
+    $('#finishModal').removeClass('hidden'); // إظهار المودال "finishModal"
+  });
+
+  // عندما يتم الضغط على زر "ألغاء" في المودال الرابع
+  $('#closeFinishModalBtn').click(function() {
+    $('#finishModal').addClass('hidden'); // إخفاء المودال الرابع
+  });
+
   // يمكنك أيضًا إغلاق المودال عند الضغط في أي مكان خارج المودال
   $('#myModal').click(function(event) {
     if (event.target === this) {
@@ -542,11 +578,13 @@
       $(this).addClass('hidden'); // إخفاء المودال الثالث
     }
   });
+
+  $('#finishModal').click(function(event) {
+    if (event.target === this) {
+      $(this).addClass('hidden'); // إخفاء المودال الرابع
+    }
+  });
 });
-
-
-
-
 
 
 
