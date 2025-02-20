@@ -221,7 +221,7 @@
     <!-- Profile Content -->
     <div class="profile-content">
       <h1 class="profile-name" id="profile-name">م.يوسف سهيل</h1>
-      <label for="profile-input" class="upload-label">تغيير صورة الملف الشخصي</label>
+      <!-- <label for="profile-input" class="upload-label">تغيير صورة الملف الشخصي</label> -->
       <input type="file" id="profile-input" accept="image/*" onchange="uploadProfilePicture(event)">
     </div>
     <div class="profile-items">
@@ -339,8 +339,11 @@
  
     
     <div id="cancelModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
-      <div class="bg-white px-5 w-[90%]   lg:w-[350px] h-[350px]  p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
+      <div class="bg-white px-3 w-[90%]   lg:w-[350px] h-[350px]  p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
         <h2 class="text-2xl font-bold mb-4">حذف الطلب</h2>
+        <form>
+          <input type="text" class="w-[250px] rounded-full h-[45px] bg-gray-300 outline-none px-4" placeholder="أدخل الرقم">
+        </form>
         <p class="w-[70%] text-md leading-[20px] text-center font-semibold">
           سوف نقوم بحذف الطلب الحالي من  حسابك الحالي , هل أنت مستعد لحذف الطلب  ؟
         </p>
@@ -598,7 +601,7 @@
 
 
   $(document).ready(function () {
-    // لفتح المودال الثاني بعد الضغط على "التالي" في المودال الأول
+    const token = localStorage.getItem('token');
     $('#nextFinishModalBtn').on('click', function () {
       $('#closeAccountModal').addClass('hidden');
       $('#finishModal').removeClass('hidden');
@@ -628,32 +631,35 @@
       }
 
        console.log('Sending data...');
-    $.ajax({
-        url: 'https://highleveltecknology.com/beehive/api/inactive_my_account/19',
-        method: 'POST',
-        data: {
-          name: name,
-          mobile_wallet: mobile_wallet,
-          account_number_bank: account_number_bank,
-          status: 'inactive',
-        },
-        success: function (response) {
-          Swal.fire({
+       $.ajax({
+    url: 'https://highleveltecknology.com/beehive/api/inactive_my_account/19',
+    method: 'POST',
+    headers: {
+        'Authorization': 'Bearer ' + token // استبدل بـ token المتغير الذي يحتوي على التوكين
+    },
+    data: {
+        name: name,
+        mobile_wallet: mobile_wallet,
+        account_number_bank: account_number_bank,
+        status: 'inactive',
+    },
+    success: function (response) {
+        Swal.fire({
             icon: 'success',
             title: 'تم الإرسال',
             text: 'تم إرسال البيانات بنجاح!',
-          });
-          $('#finishModal').addClass('hidden');
-        },
-        error: function (xhr, status, error) {
-          Swal.fire({
+        });
+        $('#finishModal').addClass('hidden');
+    },
+    error: function (xhr, status, error) {
+        Swal.fire({
             icon: 'error',
             title: 'فشل الإرسال',
             text: 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى.',
-          });
-        },
-      });
-    });
+        });
+    },
+});
+});
 
     // زر إلغاء المودال الأول
     $('#closeAccountModalBtn').on('click', function () {
