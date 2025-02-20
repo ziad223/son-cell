@@ -160,6 +160,7 @@
       display: flex;
       align-items: center;
       gap: 20px;
+      flex-wrap: wrap;
 
     }
     .order-card{
@@ -493,28 +494,40 @@
     });
 
 
-     $(document).ready(function () {
+  $(document).ready(function () {
       const token = localStorage.getItem('token');
+      const userData = localStorage.getItem('userData');
+      let clientId = null; // تعريف المتغير خارج الـ if
 
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        clientId = parsedData.client.id;
+        console.log(clientId);
+      } else {
+        console.log('userData غير موجود في localStorage');
+      }
+
+      // التأكد من أن clientId معرف قبل تنفيذ الـ Ajax
+      if (clientId) {
         $.ajax({
-          url: 'https://highleveltecknology.com/beehive/api/show_all_my_order/10',
+          url: `https://highleveltecknology.com/beehive/api/show_all_my_order/${clientId}`,
           method: 'GET',
-           headers: {
-            'Authorization': 'Bearer ' + token  // Send the token in the header
+          headers: {
+            'Authorization': 'Bearer ' + token  // إرسال التوكن في الهيدر
           },
           dataType: 'json',
           success: function (response) {
             if (response.success) {
-               let order_id = response.my_orders;
+              let order_id = response.my_orders;
               console.log(order_id[0].order_id);
 
-              var ordersHtml = '';
+              let ordersHtml = '';
               response.my_orders.forEach(function (order) {
                 ordersHtml += `
-                                <div class="order-card">
-                                    <p><strong>الخدمة:</strong> ${order.service_name}</p>
-                                </div>
-                            `;
+              <div class="order-card">
+                  <p><strong>الخدمة:</strong> ${order.service_name}</p>
+              </div>
+            `;
               });
 
               $('.orders-parent').html(ordersHtml);
@@ -526,11 +539,13 @@
             $('#orders-container').html('<p>فشل الاتصال بالخادم. حاول مرة أخرى لاحقًا.</p>');
           }
         });
-           $('.current-orders').click(function () {
-         $('.info-parent').css('display', 'none');
-            $('#orders-container').css('display', 'block');
-       });
+      }
+
+      $('.current-orders').click(function () {
+        $('.info-parent').css('display', 'none');
+        $('#orders-container').css('display', 'block');
       });
+    });
 
       $(document).ready(function () {
           $('.profile-item:has(.fa-right-from-bracket)').click(function () {
