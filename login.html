@@ -142,9 +142,7 @@
                                 localStorage.setItem('token', response.token);
                    localStorage.setItem('userData', JSON.stringify(response));
 
-                   // تحقق من التوكن في الـ localStorage
-                   console.log("Token saved:", localStorage.getItem('token'));
-
+                          
                    setTimeout(function () {
                        window.location.href = "profail.html"; // التأكد من اسم الصفحة
                         }, 1000);

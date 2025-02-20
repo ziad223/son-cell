@@ -326,9 +326,19 @@
     
     <!-- Modal -->
     <div id="myModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center ">
-      <div class="bg-white px-5 w-[90%]   lg:w-[350px] h-[350px]  p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
+      <div class="bg-white px-5 w-[90%]   lg:w-[350px] h-[450px]  p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
         <h2 class="text-2xl font-bold mb-4">طلب جديد</h2>
         <p class="w-[70%] text-md leading-[20px] text-center font-semibold">سوف نقوم بأضافة طلب جديد بنفس معلومات حسابك الحالي , هل أنت مستعد لأضافة طلب  جديد ؟</p>
+    <form id="serviceForm" class="flex flex-col gap-4">
+      <input type="text" name="service_name[]"
+        class="service-name w-[250px] mx-auto block rounded-full h-[45px] bg-gray-300 outline-none px-4"
+        placeholder="1 أسم الخدمة">
+      <input type="text" name="service_name[]"
+        class="service-name w-[250px] mx-auto block rounded-full h-[45px] bg-gray-300 outline-none px-4"
+        placeholder="2 أسم الخدمة">
+    </form>
+    
+
          <div class="flex  items-center justify-around  w-full ">
           <button id="closeModalBtn" class="bg-red-500  h-[40px] text-xl cursor-pointer w-[20%] h-[30px] text-white px-4 py-2 rounded">ألغاء</button>
         <button id="confirmModalBtn" class="bg-green-500  h-[40px] text-xl cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded">تأكيد</button>
@@ -338,21 +348,26 @@
 
  
     
-    <div id="cancelModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
-      <div class="bg-white px-3 w-[90%]   lg:w-[350px] h-[350px]  p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
-        <h2 class="text-2xl font-bold mb-4">حذف الطلب</h2>
-        <form>
-          <input type="text" class="w-[250px] rounded-full h-[45px] bg-gray-300 outline-none px-4" placeholder="أدخل الرقم">
-        </form>
-        <p class="w-[70%] text-md leading-[20px] text-center font-semibold">
-          سوف نقوم بحذف الطلب الحالي من  حسابك الحالي , هل أنت مستعد لحذف الطلب  ؟
-        </p>
-         <div class="flex  items-center justify-around  w-full ">
-          <button id="closeCancelModalBtn" class="bg-red-500 text-xl h-[40px] cursor-pointer w-[20%] h-[30px] text-white px-4 py-2 rounded">ألغاء</button>
-        <button id="confirmCancelModalBtn" class="bg-green-500 text-xl h-[40px] cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded">تأكيد</button>
-         </div>
+  <div id="cancelModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
+    <div
+      class="bg-white px-3 w-[90%] lg:w-[350px] h-[350px] p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
+      <h2 class="text-2xl font-bold mb-4">حذف الطلب</h2>
+      <!-- تم حذف زر الإرسال من النموذج -->
+      <div id="cancelForm">
+        <input type="text" class="w-[250px] rounded-full h-[45px] bg-gray-300 outline-none px-4" placeholder="أدخل الرقم">
+      </div>
+      <p class="w-[70%] text-md leading-[20px] text-center font-semibold">
+        سوف نقوم بحذف الطلب الحالي من حسابك الحالي , هل أنت مستعد لحذف الطلب؟
+      </p>
+      <div class="flex items-center justify-around w-full">
+        <button id="closeCancelModalBtn"
+          class="bg-red-500 text-xl h-[40px] cursor-pointer w-[20%] text-white px-4 py-2 rounded">ألغاء</button>
+        <button id="confirmCancelModalBtn"
+          class="bg-green-500 text-xl h-[40px] cursor-pointer w-[20%] text-white px-4 py-2 rounded">تأكيد</button>
       </div>
     </div>
+  </div>
+
       
     <div id="closeAccountModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
       <div class="bg-white px-5 w-[90%]   lg:w-[350px] h-[350px]  p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
@@ -490,12 +505,14 @@
           dataType: 'json',
           success: function (response) {
             if (response.success) {
+               let order_id = response.my_orders;
+              console.log(order_id[0].order_id);
+
               var ordersHtml = '';
               response.my_orders.forEach(function (order) {
                 ordersHtml += `
                                 <div class="order-card">
                                     <p><strong>الخدمة:</strong> ${order.service_name}</p>
-                                    <p><strong>التكلفة:</strong> ${order.service_cost} جنيه</p>
                                 </div>
                             `;
               });
@@ -667,6 +684,133 @@
     });
   });
 
+  $(document).ready(function () {
+    // فتح المودال عند الضغط على "طلب جديد"
+    $('#openModalBtn').click(function () {
+      $('#myModal').fadeIn(); // أو استخدم .show() لإظهاره فوراً
+    });
+
+    // الكود الخاص بالزر "تأكيد" الموجود داخل المودال
+    const token = localStorage.getItem('token');
+    $('#confirmModalBtn').click(function (e) {
+      e.preventDefault();
+
+      // جمع القيم من حقول "أسم الخدمة" باستخدام صنف مشترك
+      const serviceNames = [];
+      $('.service-name').each(function () {
+        const name = $(this).val().trim();
+        if (name !== "") {
+          serviceNames.push(name);
+        }
+      });
+
+      // خدمة التكلفة ثابتة
+      const serviceCost = 3800;
+
+      // التحقق من وجود خدمتين على الأقل
+      if (serviceNames.length < 2) {
+        Swal.fire({
+          icon: 'error',
+          title: 'خطأ',
+          text: 'يجب إدخال اسم خدمتين على الأقل',
+        });
+        return;
+      }
+
+      // تجهيز البيانات للإرسال
+      const formData = {
+        service_name: serviceNames,
+        service_cost: serviceCost,
+      };
+
+      // إرسال البيانات بواسطة Ajax مع إضافة التوكن في الهيدر
+      $.ajax({
+        url: 'https://highleveltecknology.com/beehive/api/add_service',
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        data: JSON.stringify(formData),
+        success: function (response) {
+          Swal.fire({
+            icon: 'success',
+            title: 'تمت الإضافة',
+            text: 'تم إضافة الخدمة بنجاح!',
+          });
+          $('#myModal').fadeOut();
+        },
+        error: function (xhr, status, error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'خطأ',
+            text: 'حدث خطأ أثناء الإضافة. حاول مرة أخرى!',
+          });
+        },
+      });
+    });
+
+    // إغلاق المودال عند الضغط على زر الإغلاق
+    $('#closeModalBtn').click(function () {
+      $('#myModal').fadeOut();
+    });
+  });
+
+
+ $(document).ready(function () {
+    $('#confirmCancelModalBtn').click(function (e) {
+      e.preventDefault();
+
+      // قراءة الرقم من الحقل داخل المودال
+      var mobile_wallet = $('#cancelModal').find('input[placeholder="أدخل الرقم"]').val().trim();
+
+      if (mobile_wallet === "") {
+        Swal.fire({
+          icon: 'error',
+          title: 'خطأ',
+          text: 'يرجى إدخال الرقم'
+        });
+        return;
+      }
+
+      // الحصول على التوكن من localStorage
+      var token = localStorage.getItem('token');
+
+      // إرسال الرقم بواسطة Ajax مع إضافة التوكن في الهيدر والبيانات status: "inactive"
+      $.ajax({
+        url: 'https://highleveltecknology.com/beehive/api/inactive_order/10',
+        type: 'POST',
+        data: {
+          mobile_wallet: mobile_wallet,
+          status: "inactive"
+        },
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        success: function (response) {
+          // عرض الرسالة المرجعة من الباك إند في SweetAlert
+          Swal.fire({
+            icon: 'success',
+            title: 'تم بنجاح',
+            text: response.message || 'تم إرسال الرقم بنجاح!'
+          });
+          $('#cancelModal').hide();
+        },
+        error: function (xhr, status, error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'خطأ',
+            text: 'حدث خطأ أثناء الإرسال. حاول مرة أخرى!'
+          });
+        }
+      });
+    });
+
+    // إغلاق المودال عند الضغط على زر الإلغاء
+    $('#closeCancelModalBtn').click(function () {
+      $('#cancelModal').hide();
+    });
+  });
 
 
    
