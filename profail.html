@@ -827,7 +827,15 @@
     });
   });
 
+          window.onload = function () {
+            // التحقق من وجود التوكن في localStorage
+            const token = localStorage.getItem("token");
+            const startButton = document.getElementById("startRequestButton");
+            if (!token) {
+              window.location.href = "login.html";
 
+            }
+          };
    
   </script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

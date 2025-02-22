@@ -215,6 +215,17 @@
         });
     });
 
+
+            window.onload = function () {
+                    // التحقق من وجود التوكن في localStorage
+                    const token = localStorage.getItem("token");
+                    const startButton = document.getElementById("startRequestButton");
+                    if (!token) {
+                        window.location.href = "login.html";
+
+                    }
+                };
+
 </script>
 </style><div class="chat-gpt-quick-query-container" style="position: relative; z-index: 2147483647;">
 <div class="css-18jo2e4 ant-app"><div><span></span><span class="ant-dropdown-trigger ant-dropdown-rtl">

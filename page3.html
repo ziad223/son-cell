@@ -109,6 +109,17 @@
         </div>
        </div>
     </body>
+    <script>
+                window.onload = function () {
+                        // التحقق من وجود التوكن في localStorage
+                        const token = localStorage.getItem("token");
+                        const startButton = document.getElementById("startRequestButton");
+                        if (!token) {
+                            window.location.href = "login.html";
+
+                        }
+                    };
+    </script>
 <script src="./iofrm_files/jquery.min.js.تنزيل"></script>
 <script src="./iofrm_files/popper.min.js.تنزيل"></script>
 <script src="./iofrm_files/bootstrap.bundle.min.js.تنزيل"></script>

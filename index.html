@@ -112,18 +112,6 @@
     // التحقق من وجود التوكن في localStorage
     const token = localStorage.getItem("token");
     const startButton = document.getElementById("startRequestButton");
-
-    // التحقق من حالة التوكن
-    // if (token) {
-    //     // إذا كان هناك توكن، تفعيل الرابط لفتح profile.html
-    //     startButton.href = "profail.html";
-    // } else {
-    //     // إذا لم يكن هناك توكن، توجيه المستخدم إلى صفحة تسجيل الدخول
-    //     startButton.addEventListener("click", function() {
-    //         window.location.href = "page3.html";
-    //     });
-    // }
-    
     if(!token){
             window.location.href = "login.html";
 
