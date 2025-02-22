@@ -892,13 +892,11 @@
               }
             });
 
-          } else {
-            Swal.fire({ icon: 'error', title: 'خطأ', text: 'لم يتم العثور على أي طلبات' });
-          }
+          } 
         },
         error: function (xhr, status, error) {
           console.log("Fetch Orders Error:", xhr.responseText);
-          Swal.fire({ icon: 'error', title: 'خطأ', text: 'حدث خطأ أثناء جلب الطلبات' });
+          Swal.fire({ icon: 'error', title: 'خطأ', text: error });
         }
       });
     });
