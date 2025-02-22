@@ -636,71 +636,91 @@
 
 
   $(document).ready(function () {
-    const token = localStorage.getItem('token');
-    $('#nextFinishModalBtn').on('click', function () {
-      $('#closeAccountModal').addClass('hidden');
-      $('#finishModal').removeClass('hidden');
-    });
+      const token = localStorage.getItem('token');
+      const userData = localStorage.getItem('userData');
+      let clientId = null;
 
-    // زر إلغاء في المودال الثاني
-    $('#closeFinishModalBtn').on('click', function () {
-      $('#finishModal').addClass('hidden');
-    });
-
-    // زر إرسال البيانات في المودال الثاني
-    $('#submitFinishModalBtn').on('click', function (e) {
-      e.preventDefault();
-
-      var name = $('#name').val().trim();
-      var mobile_wallet = $('#mobile_wallet').val().trim();
-      var account_number_bank = $('#account_number_bank').val().trim();
-
-      if (name === '' || mobile_wallet === '' || account_number_bank === '') {
-        Swal.fire({
-          icon: 'warning',
-          title: 'خطأ',
-          text: 'يرجى ملء جميع الحقول',
-        });
-         console.log('Validation failed: empty fields');
-        return;
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        clientId = parsedData.client.id;
+        console.log("Client ID:", clientId);
+      } else {
+        console.log('userData غير موجود في localStorage');
       }
 
-       console.log('Sending data...');
-       $.ajax({
-    url: 'https://highleveltecknology.com/beehive/api/inactive_my_account/19',
-    method: 'POST',
-    headers: {
-        'Authorization': 'Bearer ' + token // استبدل بـ token المتغير الذي يحتوي على التوكين
-    },
-    data: {
-        name: name,
-        mobile_wallet: mobile_wallet,
-        account_number_bank: account_number_bank,
-        status: 'inactive',
-    },
-    success: function (response) {
-        Swal.fire({
-            icon: 'success',
-            title: 'تم الإرسال',
-            text: 'تم إرسال البيانات بنجاح!',
-        });
-        $('#finishModal').addClass('hidden');
-    },
-    error: function (xhr, status, error) {
-        Swal.fire({
-            icon: 'error',
-            title: 'فشل الإرسال',
-            text: 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى.',
-        });
-    },
-});
-});
+      $('#nextFinishModalBtn').on('click', function () {
+        $('#closeAccountModal').addClass('hidden');
+        $('#finishModal').removeClass('hidden');
+      });
 
-    // زر إلغاء المودال الأول
-    $('#closeAccountModalBtn').on('click', function () {
-      $('#closeAccountModal').addClass('hidden');
+      $('#closeFinishModalBtn').on('click', function () {
+        $('#finishModal').addClass('hidden');
+      });
+
+      $('#submitFinishModalBtn').on('click', function (e) {
+        e.preventDefault();
+
+        var name = $('#name').val().trim();
+        var mobile_wallet = $('#mobile_wallet').val().trim();
+        var account_number_bank = $('#account_number_bank').val().trim();
+
+        if (name === '' || mobile_wallet === '' || account_number_bank === '') {
+          Swal.fire({
+            icon: 'warning',
+            title: 'خطأ',
+            text: 'يرجى ملء جميع الحقول',
+          });
+          console.log('Validation failed: empty fields');
+          return;
+        }
+
+        if (!clientId) {
+          Swal.fire({
+            icon: 'error',
+            title: 'خطأ',
+            text: 'لم يتم العثور على Client ID',
+          });
+          console.log('Client ID غير موجود');
+          return;
+        }
+
+        console.log('Sending data to client ID:', clientId);
+
+        $.ajax({
+          url: `https://highleveltecknology.com/beehive/api/inactive_my_account/${clientId}`,
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + token
+          },
+          data: {
+            name: name,
+            mobile_wallet: mobile_wallet,
+            account_number_bank: account_number_bank,
+            status: 'inactive',
+          },
+          success: function (response) {
+            Swal.fire({
+              icon: 'success',
+              title: 'تم الإرسال',
+              text: response.message ||  'تم إرسال البيانات بنجاح!',
+            });
+            $('#finishModal').addClass('hidden');
+          },
+          error: function (xhr, status, error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'فشل الإرسال',
+              text: error || 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى.',
+            });
+          },
+        });
+      });
+
+      $('#closeAccountModalBtn').on('click', function () {
+        $('#closeAccountModal').addClass('hidden');
+      });
     });
-  });
+
 
   $(document).ready(function () {
     // فتح المودال عند الضغط على "طلب جديد"
