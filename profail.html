@@ -161,6 +161,7 @@
       align-items: center;
       gap: 20px;
       flex-wrap: wrap;
+      margin-top: 20px;
 
     }
     .order-card{
@@ -171,6 +172,7 @@
       flex-direction: column;
       gap: 5px;
       width: 30%;
+      margin-bottom: 20px !important;
 
     }
     .order-card p{
@@ -319,6 +321,7 @@
     </div>
 
     <div id="orders-container">
+      <h2 class="mb-3 font-bold text-xl">الطلبات الحالية :</h2>
      <div class="orders-parent">
 
      </div>
@@ -812,16 +815,94 @@
           $('#cancelModal').hide();
         },
         error: function (xhr, status, error) {
+          
           Swal.fire({
             icon: 'error',
             title: 'خطأ',
-            text: 'حدث خطأ أثناء الإرسال. حاول مرة أخرى!'
+            text: error || 'حدث خطأ أثناء الإرسال. حاول مرة أخرى!'
           });
         }
       });
     });
 
     // إغلاق المودال عند الضغط على زر الإلغاء
+    $('#closeCancelModalBtn').click(function () {
+      $('#cancelModal').hide();
+    });
+  });
+
+ $(document).ready(function () {
+    $('#confirmCancelModalBtn').click(function (e) {
+      e.preventDefault();
+
+      var mobile_wallet = $('#cancelModal').find('input[placeholder="أدخل الرقم"]').val().trim();
+      if (mobile_wallet === "") {
+        Swal.fire({ icon: 'error', title: 'خطأ', text: 'يرجى إدخال الرقم' });
+        return;
+      }
+
+      var token = localStorage.getItem('token');
+      const userData = localStorage.getItem('userData');
+      let clientId = null;
+
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        clientId = parsedData.client.id;
+        console.log("Client ID:", clientId);
+      } else {
+        console.log('userData غير موجود في localStorage');
+      }
+
+      if (!clientId) {
+        Swal.fire({ icon: 'error', title: 'خطأ', text: 'رقم العميل غير موجود' });
+        return;
+      }
+
+      // جلب الطلبات للحصول على order_id
+      $.ajax({
+        url: `https://highleveltecknology.com/beehive/api/show_all_my_order/${clientId}`,
+        type: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` },
+        success: function (response) {
+          console.log("API Response:", response);
+
+          if (response.success && response.my_orders.length > 0) {
+            var order_id = response.my_orders[0].order_id;
+            console.log("Order ID:", order_id);
+
+            if (!order_id) {
+              Swal.fire({ icon: 'error', title: 'خطأ', text: 'لم يتم العثور على رقم الطلب' });
+              return;
+            }
+
+            // إرسال الطلب
+            $.ajax({
+              url: `https://highleveltecknology.com/beehive/api/inactive_order/${order_id}`,
+              type: 'POST',
+              data: JSON.stringify({ mobile_wallet: mobile_wallet, status: "inactive" }),
+              contentType: "application/json",
+              headers: { 'Authorization': `Bearer ${token}` },
+              success: function (res) {
+                Swal.fire({ icon: 'success', title: 'تم بنجاح', text: res.message || 'تم إرسال الرقم بنجاح!' });
+                $('#cancelModal').hide();
+              },
+              error: function (xhr, status, error) {
+                console.log("Error Response:", xhr.responseText);
+                Swal.fire({ icon: 'error', title: 'خطأ', text: xhr.responseText || 'حدث خطأ أثناء الإرسال. حاول مرة أخرى!' });
+              }
+            });
+
+          } else {
+            Swal.fire({ icon: 'error', title: 'خطأ', text: 'لم يتم العثور على أي طلبات' });
+          }
+        },
+        error: function (xhr, status, error) {
+          console.log("Fetch Orders Error:", xhr.responseText);
+          Swal.fire({ icon: 'error', title: 'خطأ', text: 'حدث خطأ أثناء جلب الطلبات' });
+        }
+      });
+    });
+
     $('#closeCancelModalBtn').click(function () {
       $('#cancelModal').hide();
     });
