@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>إنشاء حساب</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
-    <link rel="icon" href="./img/icon.png">
+    <link rel="icon" href="./img/logoo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Abel&family=Almarai:wght@300;400;700;800&family=Cairo:wght@200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
@@ -93,14 +93,14 @@
                             <input class="form-control" type="date" name="birth_date" required>
                             <input class="form-control" type="number" name="na_number" placeholder="الرقم القومي"
                                 required>
-                            <select name="gender" required>
+                            <select name="gender" dir="rtl" required>
                                 <option value="" disabled selected>الجنس</option>
                                 <option value="male">ذكر</option>
                                 <option value="female">أنثى</option>
                             </select>
-                            <select name="marital_status" required>
+                            <select name="marital_status" dir="rtl" required>
                                 <option value="" disabled selected>الحالة الاجتماعية</option>
-                                <option value="single">أعزب</option>
+                                <option value="single">أعذب</option>
                                 <option value="married">متزوج</option>
                             </select>
                             <input class="form-control" type="number" name="num_of_children" placeholder="عدد الابناء"
@@ -109,14 +109,23 @@
                             <input class="form-control" type="tel" name="mobile" placeholder="رقم التلفون" required>
                             <input class="form-control" type="tel" name="another_mobile" placeholder="تليفون اخر"
                                 required>
-                            <input class="form-control" type="text" name="Academic_qualification"
-                                placeholder="المؤهل العلمي" required>
+                          
+<select name="Academic_qualification" required dir="rtl" class="custom-select">
+    <option value="" disabled selected>المؤهل العلمي</option>
+    <option value="بدون مؤهل">بدون مؤهل</option>
+    <option value="مؤهل تحت المتوسط">مؤهل تحت المتوسط</option>
+    <option value="مؤهل متوسط">مؤهل متوسط</option>
+    <option value="مؤهل فوق المتوسط">مؤهل فوق المتوسط</option>
+    <option value="مؤهل عالي">مؤهل عالي</option>
+</select>
+
+
                             <input class="form-control" type="text" name="work" placeholder="المهنة الحالية" required>
                             <input class="form-control" type="text" name="service_name[]" placeholder="أسم الخدمة"
                                 required>
                             <input class="form-control" type="number" name="service_cost[]" placeholder="تكلفة الخدمة"
                                 required>
-<select class="form-contro" name="governorate" required>
+<select class="form-contro" name="governorate" dir="rtl" required>
     <option value="" disabled selected>اختر المحافظة</option>
     <option value="القاهرة">القاهرة</option>
     <option value="الجيزة">الجيزة</option>
