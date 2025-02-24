@@ -182,104 +182,105 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-        $("#signup-form").on("submit", function (e) {
-            e.preventDefault();
+   $(document).ready(function () {
+    $("#signup-form").on("submit", function (e) {
+        e.preventDefault();
 
-            // التحقق من رقم الموبايل
-            var mobile = $("input[name='mobile']").val();
-            var anotherMobile = $("input[name='another_mobile']").val();
-            var password = $("input[name='password']").val();
-            var passwordConfirmation = $("input[name='password_confirmation']").val();
+        // التحقق من رقم الموبايل
+        var mobile = $("input[name='mobile']").val();
+        var anotherMobile = $("input[name='another_mobile']").val();
+        var password = $("input[name='password']").val();
+        var passwordConfirmation = $("input[name='password_confirmation']").val();
 
-            var mobileRegex = /^(010|011|012|015)\d{8}$/;
+        var mobileRegex = /^(10|11|12|15)\d{8}$/;
 
-            if (!mobileRegex.test(mobile)) {
-                Swal.fire({
-                    title: "خطأ في رقم الموبايل",
-                    text: "رقم الموبايل يجب أن يكون 11 رقم ويبدأ بـ 010 أو 011 أو 012 أو 015.",
-                    icon: "error",
-                    confirmButtonText: "حسناً"
-                });
-                return;
-            }
+        if (!mobileRegex.test(mobile)) {
+            Swal.fire({
+                title: "خطأ في رقم الموبايل",
+                text: "رقم الموبايل يجب أن يكون 10 رقم ويبدأ بـ 10 أو 11 أو 12 أو 15.",
+                icon: "error",
+                confirmButtonText: "حسناً"
+            });
+            return;
+        }
 
-            if (!mobileRegex.test(anotherMobile)) {
-                Swal.fire({
-                    title: "خطأ في رقم الموبايل الآخر",
-                    text: "رقم الموبايل الآخر يجب أن يكون 11 رقم ويبدأ بـ 010 أو 011 أو 012 أو 015.",
-                    icon: "error",
-                    confirmButtonText: "حسناً"
-                });
-                return;
-            }
+        if (!mobileRegex.test(anotherMobile)) {
+            Swal.fire({
+                title: "خطأ في رقم الموبايل الآخر",
+                text: "رقم الموبايل يجب أن يكون 10 رقم ويبدأ بـ 10 أو 11 أو 12 أو 15.",
+                icon: "error",
+                confirmButtonText: "حسناً"
+            });
+            return;
+        }
 
-            // التحقق من كلمة المرور
-            if (password.length < 8) {
-                Swal.fire({
-                    title: "خطأ في الرقم السري",
-                    text: "الرقم السري يجب ألا يقل عن 8 أحرف.",
-                    icon: "error",
-                    confirmButtonText: "حسناً"
-                });
-                return;
-            }
+        // التحقق من كلمة المرور
+        if (password.length < 8) {
+            Swal.fire({
+                title: "خطأ في الرقم السري",
+                text: "الرقم السري يجب ألا يقل عن 8 أحرف.",
+                icon: "error",
+                confirmButtonText: "حسناً"
+            });
+            return;
+        }
 
-            if (password !== passwordConfirmation) {
-                Swal.fire({
-                    title: "عدم تطابق الرقم السري",
-                    text: "الرقم السري وتأكيد الرقم السري غير متطابقين.",
-                    icon: "error",
-                    confirmButtonText: "حسناً"
-                });
-                return;
-            }
+        if (password !== passwordConfirmation) {
+            Swal.fire({
+                title: "عدم تطابق الرقم السري",
+                text: "الرقم السري وتأكيد الرقم السري غير متطابقين.",
+                icon: "error",
+                confirmButtonText: "حسناً"
+            });
+            return;
+        }
 
-            // لو كل حاجة تمام ابعت الفورم
-            var formData = new FormData(this);
+        // لو كل حاجة تمام ابعت الفورم
+        var formData = new FormData(this);
 
-            $.ajax({
-                url: "https://highleveltecknology.com/beehive/api/register_client",
-                type: "POST",
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function (response) {
-                    if (response.success) {
-                        Swal.fire({
-                            title: "تم التسجيل بنجاح!",
-                            text: "تم إنشاء حسابك بنجاح.",
-                            icon: "success",
-                            confirmButtonText: "حسناً"
-                        }).then(() => {
-                            localStorage.setItem('payment_url' ,  response.payment_url)
-                            window.location.href = "index.html";
-                        });
-                    } else {
-                        let errorMessage = typeof response.errors === 'object' ?
-                            Object.values(response.errors).join('\n') :
-                            response.errors || "حدث خطأ أثناء التسجيل.";
-
-                        Swal.fire({
-                            title: "فشل التسجيل",
-                            text: errorMessage,
-                            icon: "error",
-                            confirmButtonText: "حاول مرة أخرى"
-                        });
-                    }
-                },
-                error: function (xhr) {
-                    let errorText = xhr.responseText || "حدث خطأ أثناء الاتصال بالخادم.";
+        $.ajax({
+            url: "https://highleveltecknology.com/beehive/api/register_client",
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                if (response.success) {
                     Swal.fire({
-                        title: "خطأ",
-                        text: errorText,
+                        title: "تم التسجيل بنجاح!",
+                        text: "تم إنشاء حسابك بنجاح.",
+                        icon: "success",
+                        confirmButtonText: "حسناً"
+                    }).then(() => {
+                        localStorage.setItem('payment_url', response.payment_url);
+                        window.location.href = "index.html";
+                    });
+                } else {
+                    let errorMessage = typeof response.errors === 'object' ?
+                        Object.values(response.errors).join('\n') :
+                        response.errors || "حدث خطأ أثناء التسجيل.";
+
+                    Swal.fire({
+                        title: "فشل التسجيل",
+                        text: errorMessage,
                         icon: "error",
                         confirmButtonText: "حاول مرة أخرى"
                     });
                 }
-            });
+            },
+            error: function (xhr) {
+                let errorText = xhr.responseText || "حدث خطأ أثناء الاتصال بالخادم.";
+                Swal.fire({
+                    title: "خطأ",
+                    text: errorText,
+                    icon: "error",
+                    confirmButtonText: "حاول مرة أخرى"
+                });
+            }
         });
     });
+});
+
 </script>
 
 
