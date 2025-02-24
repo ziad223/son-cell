@@ -98,7 +98,7 @@
                 var password = $("input[name='password']").val().trim();
 
                 // التحقق من رقم الهاتف
-                var mobileRegex = /^(010|011|012|015)\d{8}$/;
+                var mobileRegex = /^(10|11|12|15)\d{8}$/;
                 if (!mobileRegex.test(mobile)) {
                     Swal.fire({
                         title: "رقم الهاتف غير صحيح!",
