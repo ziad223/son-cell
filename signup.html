@@ -192,12 +192,12 @@
         var password = $("input[name='password']").val();
         var passwordConfirmation = $("input[name='password_confirmation']").val();
 
-        var mobileRegex = /^(10|11|12|15)\d{8}$/;
+        var mobileRegex = /^(010|011|012|015)\d{8}$/;
 
         if (!mobileRegex.test(mobile)) {
             Swal.fire({
                 title: "خطأ في رقم الموبايل",
-                text: "رقم الموبايل يجب أن يكون 10 رقم ويبدأ بـ 10 أو 11 أو 12 أو 15.",
+                text: "رقم الموبايل يجب أن يكون 10 رقم ويبدأ بـ 010 أو 011 أو 012 أو 015.",
                 icon: "error",
                 confirmButtonText: "حسناً"
             });
@@ -207,7 +207,7 @@
         if (!mobileRegex.test(anotherMobile)) {
             Swal.fire({
                 title: "خطأ في رقم الموبايل الآخر",
-                text: "رقم الموبايل يجب أن يكون 10 رقم ويبدأ بـ 10 أو 11 أو 12 أو 15.",
+                text: "رقم الموبايل يجب أن يكون 10 رقم ويبدأ بـ 010 أو 011 أو 012 أو 015.",
                 icon: "error",
                 confirmButtonText: "حسناً"
             });
