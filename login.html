@@ -45,6 +45,10 @@
               display: none !important;
             }
         }
+        #login-form input{
+            border-radius: 50px;
+            padding: 10px 20px;
+        }
     </style>
 </head>
 <body>
@@ -125,7 +129,7 @@
                 // إرسال البيانات عبر AJAX
                 $.ajax({
                     url: "https://highleveltecknology.com/beehive/api/loginWithJWT",  // رابط الـ API
-                    type: "POST",
+                    method: "POST",
                     data: formData,  // إرسال البيانات
                     success: function (response) {
                         // التحقق من الاستجابة
