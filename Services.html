@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<!-- saved from url=(0049)https://brandio.io/envato/iofrm/html/login35.html -->
+<html lang="en">
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الخدمات</title>
+    <link rel="icon" href="./img/logoo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Almarai:wght@300;400;700;800&family=Cairo:wght@200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/iofrm-style.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/iofrm-theme41.css">
+    <style>
+        body {
+            font-family: "Cairo", serif;
+            background-color: #eee;
+        }
+        ::-webkit-scrollbar{
+            background-color: #ccc !important;
+        }
+        ::-webkit-scrollbar-thumb{
+            background-color: #e1b13e !important;
+        }
+        .bottom{
+            width: 100%;
+            height: 100px;
+            color: #ffffff;
+            background-color: #e1b13e;
+            border-radius: 7px;
+        }
+
+        .container {
+    display: flex; /* استخدم flexbox لتوسيط العناصر */
+    justify-content: center; /* لتوسيط المربع أفقيًا */
+    align-items: center; /* لتوسيط المربع عموديًا */
+
+  }
+        .box1{
+            width: 750px;
+            height: 700px;
+            color: rgb(255, 255, 255);
+            background-color: #e1b13e;
+            padding: 20px; 
+            border-radius: 7px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 50px;
+            justify-content: center;
+            width: 50%;
+            margin:60px auto;
+
+        }
+        .card {
+            width: 40%;
+            background-color: #ffffff;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+        .card img {
+            width: 50px;
+            height: 50px;
+        }
+        .card-title {
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .card.selected {
+            border-color: #007bff;
+        }
+        .xx{
+             margin-left: 560px;
+        }
+        @media screen and (max-width : 500px) {
+              .xx{
+             margin-left: 60px;
+        }
+        .card-container{
+            flex-wrap: wrap;
+        }
+        .card{
+            width: 100%;
+        }
+        }
+    </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cards = document.querySelectorAll(".card");
+
+            cards.forEach(card => {
+                card.addEventListener("click", () => {
+                    card.classList.toggle("selected");
+                });
+            });
+        });
+    </script>
+ 
+    </head>
+    <body>
+       <div >
+       <div class="bottom py-4">
+        <h1 class="text-center"<center>اختر خدمتان على الاقل</center></h1>
+       </div>
+       </div>
+       <div>
+
+
+        <div class="card-container">
+          
+         
+        </div>
+        </div>
+        
+
+            <div class="form-button d-flex">
+                <center><a href="pay.html" class="btn btn-outline-primary xx" style="width: 250px; margin-top: 30px; margin-bottom: 30px;" >   أكمل الطلب</a></center>
+            </div>
+         </div>
+    </body>
+
+
+    <script>
+        $(document).ready(function () {
+            const services = [
+                { img: 'img/service-7.jpg', title: 'تجارة' },
+                { img: 'img/1.png', title: 'زراعة' },
+                { img: 'img/service-3.jpg', title: 'صحة' },
+                { img: 'img/service-4.jpg', title: 'صناعة' },
+                { img: 'img/service-6.jpg', title: 'عماله بالخارج' },
+                { img: 'img/service-7.jpg', title: 'بحث علمي' },
+                { img: 'img/service-8.jpg', title: 'تعليم' },
+                { img: 'img/service-1.jpg', title: 'أستثمار' },
+                { img: 'img/service-10.jpg', title: 'تأمين' },
+                { img: 'img/service-11.jpg', title: 'رياضة' },
+                { img: 'img/service-12.jpg', title: 'برمجه' },
+                { img: 'img/service-13.jpg', title: 'نقل' },
+                { img: 'img/service-13.jpg', title: 'سياحة ' },
+                { img: 'img/service-13.jpg', title: 'عمل بالداخل' },
+                { img: 'img/service-13.jpg', title: ' تنمية مشاريع' },
+            ];
+
+            const cardContainer = $('.card-container');
+
+            services.map(service => {
+                const cardHtml = `
+                    <div class="card">
+                        <img src="${service.img}" class="mx-auto" alt="${service.title}">
+                        <div class="card-title">${service.title}</div>
+                    </div>
+                `;
+                cardContainer.append(cardHtml);
+            });
+
+            // نفس الاسكريبت اللي بيخلي الكارت يتحدد
+            $(".card-container").on("click", ".card", function () {
+                $(this).toggleClass("selected");
+            });
+        });
+    </script>
+
+<script src="./iofrm_files/jquery.min.js.تنزيل"></script>
+<script src="./iofrm_files/popper.min.js.تنزيل"></script>
+<script src="./iofrm_files/bootstrap.bundle.min.js.تنزيل"></script>
+<script src="./iofrm_files/main.js.تنزيل"></script>
+<script>
+    $(document).ready(function () {
+        const services = [
+            { img: 'img/service-7.jpg', title: 'تجارة' },
+            { img: 'img/1.png', title: 'زراعة' },
+            { img: 'img/service-3.jpg', title: 'صحة' },
+            { img: 'img/service-4.jpg', title: 'صناعة' },
+            { img: 'img/service-6.jpg', title: 'سفر' },
+            { img: 'img/service-7.jpg', title: 'بحث علمي' },
+            { img: 'img/service-8.jpg', title: 'تعليم' },
+            { img: 'img/service-1.jpg', title: 'أستثمار' },
+            { img: 'img/service-10.jpg', title: 'تأمين' },
+            { img: 'img/service-11.jpg', title: 'رياضة' },
+            { img: 'img/service-12.jpg', title: 'لغات' },
+            { img: 'img/service-13.jpg', title: 'نقل' },
+            { img: 'img/service-13.jpg', title: ' تنمية مشاريع' },
+        ];
+
+        const cardContainer = $('.card-container');
+
+        services.forEach(service => {
+            const cardHtml = `
+                <div class="card">
+                    <img src="${service.img}" class="mx-auto" alt="${service.title}">
+                    <div class="card-title">${service.title}</div>
+                </div>
+            `;
+            cardContainer.append(cardHtml);
+        });
+
+        $(".card-container").on("click", ".card", function () {
+            const selectedCards = $(".card.selected");
+
+            if ($(this).hasClass("selected")) {
+                $(this).removeClass("selected");
+            } else {
+                if (selectedCards.length < 2) {
+                    $(this).addClass("selected");
+                } else {
+                    alert("لا يمكنك اختيار أكثر من خدمتين");
+                }
+            }
+        });
+
+        $(".xx").on("click", function (event) {
+            const selectedCards = $(".card.selected");
+
+            if (selectedCards.length !== 2) {
+                event.preventDefault(); // منع الانتقال للصفحة التالية
+                alert("يجب اختيار خدمتين بالضبط قبل المتابعة!");
+            }
+        });
+
+    });
+
+    window.onload = function () {
+        const token = localStorage.getItem("token");
+        if (!token) {
+            window.location.href = "login.html";
+        }
+    };
+</script>
+
+</style><div class="chat-gpt-quick-query-container" style="position: relative; z-index: 2147483647;">
+<div class="css-18jo2e4 ant-app"><div><span></span><span class="ant-dropdown-trigger ant-dropdown-rtl">
+
+    </span></div></div></div></template>
+</chatgpt-sidebar-popups>
+</html>

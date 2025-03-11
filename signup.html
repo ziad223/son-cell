@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إنشاء حساب</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <link rel="icon" href="./img/logoo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Abel&family=Almarai:wght@300;400;700;800&family=Cairo:wght@200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/fontawesome-all.min.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/iofrm-style.css">
+    <link rel="stylesheet" type="text/css" href="./iofrm_files/iofrm-theme41.css">
+    <style>
+      
+           body {
+            font-family: "Cairo", serif;
+        }
+        ::-webkit-scrollbar{
+            background-color: #ccc !important;
+        }
+        ::-webkit-scrollbar-thumb{
+            background-color: #e1b13e !important;
+        }
+.logo img{
+    height: max-content !important;
+    margin-bottom: 20px;
+    padding: 0;
+    width: 150px;
+    height: 150px;
+}
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 0px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            background-color: #f7f7f7;
+            cursor: pointer;
+            outline: none;
+            margin-bottom: 13px;
+        }
+
+        select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(64, 73, 82, 0.5);
+        }
+
+        input[type="text"],
+        input.form-control {
+            text-align: right;
+            direction: rtl;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5%;
+            margin-bottom: -10px;
+        }
+
+        .form-holder {
+            margin-bottom: 500px;
+        }
+
+        .img-holder {
+            display: block;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .img-holder {
+                display: none !important;
+            }
+        }
+
+        /* تعديل الـ sticky للصورة */
+        .img-holder {
+            position: fixed; /* لجعل الصورة ثابتة عند التمرير */
+            top: 0px; /* وضع الصورة في الجهة العليا */
+            right: 20px; /* وضع الصورة على الجهة اليمنى */
+            width: 700px; /* تحديد حجم الصورة الثابتة */
+            height: auto;
+        }
+
+        .form-holder {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+       
+        .ss{
+            margin-top: 200px !important;
+        }
+        #signup-form input{
+         padding: 15px;
+         border-radius: 50px;
+         width: 100% !important;
+        }
+        #signup-form select{
+         padding: 15px;
+         border-radius: 50px;
+        }  
+        @media screen and (max-width: 768px) {
+    input {
+        width: 500px !important; /* تحديد عرض الفورم ليكون 90% في الشاشات الصغيرة */
+        margin: 0 auto; /* لضمان أن الفورم يتمركز في وسط الصفحة */
+    }
+}
+    </style>
+</head>
+
+<body>
+    <div class="form-body form-left">
+        <div class="iofrm-layout">
+            <div class="img-holder">
+               <div class="ss">
+                <h1 style="size: 100px;">شركة لاينافا للتوظيف</h1>
+                <div class="info-holder">
+                    <img src="./img/img1.png" alt="">
+                </div>
+               </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content">
+                    <div class="form-items">
+                            <a href="#">
+                                <div class="logo">
+                                    <img class="logo-sie" src="./img/logoo.png" alt="">
+                                </div>
+                            </a>
+                        <h3 class="font-md">أهلا وسهلا بكم في خلية نحل</h3>
+                        <p>يرجى ادخال معلوماتك الشخصية لانشاء حساب خاص بكم</p>
+                        <!-- <div>
+                            <h2 class="font-bold fs-4 mb-5">إنشاء حساب جديد </h2>
+                        </div> -->
+                        <form id="signup-form" enctype="multipart/form-data">
+                            <input class="form-control" type="text" name="name" placeholder="الاسم رباعي" required>
+                            <input class="form-control" type="text" name="email" placeholder="البريد الألكتروني"
+                                required>
+                            <input class="form-control" type="date" name="birth_date" required>
+                            <input class="form-control" type="number" name="na_number" placeholder="الرقم القومي"
+                                required>
+                            <select name="gender" dir="rtl" required>
+                                <option value="" disabled selected>الجنس</option>
+                                <option value="male">ذكر</option>
+                                <option value="female">أنثى</option>
+                            </select>
+                            <select name="marital_status" dir="rtl" required>
+                                <option value="" disabled selected>الحالة الاجتماعية</option>
+                                <option value="single">أعذب</option>
+                                <option value="married">متزوج</option>
+                            </select>
+                            <input class="form-control" type="number" name="num_of_children" placeholder="عدد الابناء"
+                                required>
+                            <input class="form-control" type="number" name="age" placeholder="العمر" required>
+                            <input class="form-control" type="tel" name="mobile" placeholder="رقم التلفون" required>
+                            <input class="form-control" type="tel" name="another_mobile" placeholder="تليفون اخر"
+                                required>
+                          
+<select name="Academic_qualification" required dir="rtl" class="custom-select">
+    <option value="" disabled selected>المؤهل العلمي</option>
+    <option value="بدون مؤهل">بدون مؤهل</option>
+    <option value="مؤهل تحت المتوسط">مؤهل تحت المتوسط</option>
+    <option value="مؤهل متوسط">مؤهل متوسط</option>
+    <option value="مؤهل فوق المتوسط">مؤهل فوق المتوسط</option>
+    <option value="مؤهل عالي">مؤهل عالي</option>
+</select>
+
+
+                            <input class="form-control" type="text" name="work" placeholder="المهنة الحالية" required>
+                            <!-- <input class="form-control" type="text" name="service_name[]" placeholder="أسم الخدمة"
+                                required>
+                            <input class="form-control" type="number" name="service_cost[]" placeholder="تكلفة الخدمة"
+                                required> -->
+<select class="form-contro" name="governorate" dir="rtl" required>
+    <option value="" disabled selected>اختر المحافظة</option>
+    <option value="القاهرة">القاهرة</option>
+    <option value="الجيزة">الجيزة</option>
+    <option value="الإسكندرية">الإسكندرية</option>
+    <option value="الدقهلية">الدقهلية</option>
+    <option value="البحر الأحمر">البحر الأحمر</option>
+    <option value="الشرقية">الشرقية</option>
+    <option value="البحيرة">البحيرة</option>
+    <option value="الفيوم">الفيوم</option>
+    <option value="الغربية">الغربية</option>
+    <option value="الإسماعيلية">الإسماعيلية</option>
+    <option value="المنوفية">المنوفية</option>
+    <option value="المنيا">المنيا</option>
+    <option value="القليوبية">القليوبية</option>
+    <option value="الوادي الجديد">الوادي الجديد</option>
+    <option value="السويس">السويس</option>
+    <option value="أسوان">أسوان</option>
+    <option value="أسيوط">أسيوط</option>
+    <option value="بني سويف">بني سويف</option>
+    <option value="بورسعيد">بورسعيد</option>
+    <option value="دمياط">دمياط</option>
+    <option value="جنوب سيناء">جنوب سيناء</option>
+    <option value="كفر الشيخ">كفر الشيخ</option>
+    <option value="مطروح">مطروح</option>
+    <option value="الأقصر">الأقصر</option>
+    <option value="قنا">قنا</option>
+    <option value="شمال سيناء">شمال سيناء</option>
+    <option value="سوهاج">سوهاج</option>
+</select>
+                            <input class="form-control" type="text" name="city" placeholder="المدينة" required>
+                            <input class="form-control" type="text" name="center" placeholder="مركز" required>
+                            <input class="form-control" type="text" name="Village_Street" placeholder="قرية/شارع"
+                                required>
+                            <input class="form-control" type="number" name="landline" placeholder="رقم ارضي" required>
+                            <input class="form-control" type="password" name="password" placeholder="الرقم السري"
+                                required>
+                            <input class="form-control" type="password" name="password_confirmation"
+                                placeholder="إعادة إدخال الرقم السري" required>
+                            <!-- <input class="form-control" type="file" name="img" accept="image/*" required> -->
+                            <div class="form-button d-flex">
+                                <button id="submit" type="submit" class="btn btn-outline-primary">إنشاء حساب</button>
+                            </div>
+                        </form>
+                        <h6>هل تملك حساب؟ <a href="login.html">تسجيل الدخول</a></h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+
+
+      <!-- SweetAlert2 Script -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <!-- jQuery -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+  <script>
+     $(document).ready(function () {
+      $("#signup-form").on("submit", function (e) {
+          e.preventDefault();
+  
+          // التحقق من رقم الموبايل
+          var mobile = $("input[name='mobile']").val();
+          var anotherMobile = $("input[name='another_mobile']").val();
+          var password = $("input[name='password']").val();
+          var passwordConfirmation = $("input[name='password_confirmation']").val();
+  
+          var mobileRegex = /^(010|011|012|015)\d{8}$/;
+  
+          if (!mobileRegex.test(mobile)) {
+              Swal.fire({
+                  title: "خطأ في رقم الموبايل",
+                  text: "رقم الموبايل يجب أن يكون 10 رقم ويبدأ بـ 010 أو 011 أو 012 أو 015.",
+                  icon: "error",
+                  confirmButtonText: "حسناً"
+              });
+              return;
+          }
+  
+          if (!mobileRegex.test(anotherMobile)) {
+              Swal.fire({
+                  title: "خطأ في رقم الموبايل الآخر",
+                  text: "رقم الموبايل يجب أن يكون 10 رقم ويبدأ بـ 010 أو 011 أو 012 أو 015.",
+                  icon: "error",
+                  confirmButtonText: "حسناً"
+              });
+              return;
+          }
+  
+          // التحقق من كلمة المرور
+          if (password.length < 8) {
+              Swal.fire({
+                  title: "خطأ في الرقم السري",
+                  text: "الرقم السري يجب ألا يقل عن 8 أحرف.",
+                  icon: "error",
+                  confirmButtonText: "حسناً"
+              });
+              return;
+          }
+  
+          if (password !== passwordConfirmation) {
+              Swal.fire({
+                  title: "عدم تطابق الرقم السري",
+                  text: "الرقم السري وتأكيد الرقم السري غير متطابقين.",
+                  icon: "error",
+                  confirmButtonText: "حسناً"
+              });
+              return;
+          }
+  
+       
+          var formData = new FormData(this);
+  
+          $.ajax({
+              url: "https://khaleiatnahel.com/beehive/api/register_client",
+              type: "POST",
+              data: formData,
+              processData: false,
+              contentType: false,
+              success: function (response) {
+                  if (response.success) {
+                    Swal.fire({
+                    title: response.data || "تم إنشاء العميل بنجاح... لكننا أرسلنا لك OTP إلى بريدك الإلكتروني.. قم بالتحقق منه أولاً",
+                    icon: "success",
+                    showConfirmButton: false,  
+                    timer: 2000 
+                }).then(() => {
+                    localStorage.setItem("previousPage", "signup");
+                          window.location.href = "verify-email.html";
+                      });
+                  } else {
+                      let errorMessage = typeof response.errors === 'object' ?
+                          Object.values(response.errors).join('\n') :
+                          response.errors || "حدث خطأ أثناء التسجيل.";
+  
+                          Swal.fire({
+    title: "فشل التسجيل",
+    text: errorMessage,  // يمكنك تخصيص errorMessage حسب الحاجة
+    icon: "error",
+    showConfirmButton: false,  // إخفاء زر "حاول مرة أخرى"
+    timer: 2000  // الرسالة تختفي بعد 2 ثانية
+});
+
+                  }
+              },
+              error: function (xhr) {
+                  let errorText = xhr.responseText || "حدث خطأ أثناء الاتصال بالخادم.";
+                  Swal.fire({
+                      title: "خطأ",
+                      text: errorText,
+                      icon: "error",
+                      confirmButtonText: "حاول مرة أخرى"
+                  });
+              }
+          });
+      });
+  });
+  
+  </script>
+  
+  
+</body>
+
+</html>

@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <title>الملف الشخصي</title>
+  <link rel="icon" href="./img/logoo.png">
+  <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abel&family=Almarai:wght@300;400;700;800&family=Cairo:wght@200..1000&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+ 
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    .order-card{
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row !important    ;
+    }
+    .order-card i{
+      color: red;
+      cursor: pointer;
+    }
+    ::-webkit-scrollbar{
+            background-color: #ccc !important;
+        }
+        ::-webkit-scrollbar-thumb{
+            background-color: #e1b13e !important;
+        }
+    body {
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      direction: rtl;
+      font-family: "Cairo", serif !important;
+
+    }
+
+    .profile-container {
+      width: 100%;
+      max-width: 1118px;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      margin-top: 50px;
+    }
+
+    .cover {
+      width: 100%;
+      height: 300px;
+      background: url('img/img1.png') no-repeat center;
+      background-size: cover;
+      position: relative;
+    }
+
+    .profile-picture {
+      width: 150px;
+      height: 150px;
+      border: 5px solid white;
+      border-radius: 50%;
+      object-fit: cover;
+      position: absolute;
+      bottom: -75px;
+      right: 30px;
+    }
+
+    .profile-content {
+      padding: 84px 46px 20px 20px;
+      text-align: right;
+    }
+
+    .profile-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .edit-button {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #1877f2;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    .edit-button:hover {
+      background-color: #145dbf;
+    }
+
+    input[type="file"] {
+      display: none;
+    }
+
+    label.upload-label {
+      display: inline-block;
+      padding: 8px 16px;
+      background-color: #1877f2;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 10px;
+    }
+
+    label.upload-label:hover {
+      background-color: #145dbf;
+    }
+
+    .info-parent {
+      width: 50%;
+      margin: auto;
+    }
+
+    .info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: #eee;
+      border-radius: 15px;
+      padding: 20px;
+      margin: 20px;
+      font-weight: bold;
+    }
+
+    .profile-items {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+     
+      margin-bottom: 20px;
+    }
+
+    .profile-item {
+      background-color: #ddd;
+      padding: 15px;
+      cursor: pointer;
+      margin: 20px 0px;
+      border-radius: 10px;
+      width: 30%;
+      
+    }
+    .profile-item:hover{
+      background-color: #ccc;
+    }
+    .profile-item i{
+      font-size: 20px;
+    }
+     .profile-item span{
+      font-size: 20px;
+      margin-right: 10px;
+    }
+    .info-parent{
+      display: none;
+    }
+    #orders-container{
+      margin-top: 20px;
+      margin-right: 45px;
+      display: none;
+    }
+    .orders-parent{
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+
+    }
+    .order-card{
+      background-color: #ddd;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 30%;
+      margin-bottom: 20px !important;
+
+    }
+    .order-card p{
+      margin: 20px 0px;
+      font-size: 20px;
+    }
+
+    @media screen and (max-width : 500px) {
+      .info-parent {
+        width: 100%;
+      }
+
+      .info h3 {
+        font-size: 15px !important;
+      }
+      .profile-items{
+        flex-direction: column;
+      }
+       .profile-item{
+        width: 90%;
+        margin: 0;
+      }
+      #orders-container{
+        margin-right: 0;
+      }
+       .orders-parent{
+        flex-direction: column;
+       }
+     .order-card{
+      width: 90%;
+     }
+
+
+    }
+  </style>
+
+  <!-- Add jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <div class="profile-container">
+  
+    <!-- Cover Section -->
+    <div class="cover">
+      <img id="profile-picture" src="img/img1.png" alt="Profile Picture" class="profile-picture">
+    </div>
+
+    <!-- Profile Content -->
+    <div class="profile-content">
+      <h1 class="profile-name" id="profile-name">م.يوسف سهيل</h1>
+      <!-- <label for="profile-input" class="upload-label">تغيير صورة الملف الشخصي</label> -->
+      <input type="file" id="profile-input" accept="image/*" onchange="uploadProfilePicture(event)">
+    </div>
+    <div class="profile-items">
+      <div class="d-flex align-items-center profile-item personal-info">
+        <i class="fa-regular fa-circle-user "></i>
+        <span class="text-primary">المعلومات الشخصية</span>
+      </div>
+      <div class="d-flex align-items-center profile-item current-orders">
+        <i class="fa-brands fa-first-order"></i>
+        <span class="text-primary">الطلبات الحالية</span>
+      </div>
+        <div class="d-flex align-items-center profile-item" id="openModalBtn">
+          <i class="fa-solid fa-circle-plus"></i>
+          <span class="text-primary">طلب جديد</span>
+        </div>
+        <div class="d-flex align-items-center profile-item" id="cancel-order-son" style="cursor: pointer;">
+          <i class="fa-regular fa-circle-xmark"></i>
+          <span class="text-primary">ألغاء الطلب</span>
+      </div>
+        <div class="d-flex align-items-center profile-item" id="openCloseAccountModalBtn">
+          <i class="fa-solid fa-user-xmark"></i>
+          <span class="text-primary">أغلاق الحساب</span>
+        </div>
+          <div class="d-flex align-items-center profile-item">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span class="text-primary">تسجيل الخروج</span>
+          </div>
+        
+    </div>
+    <div class="info-parent d-flex flex-column gap-3 w-50 mx-auto">
+      <div class="info">
+        <h3>الأسم : </h3>
+        <h3 class="info-name"></h3>
+      </div>
+      <div class="info">
+        <h3>تاريخ الميلاد : </h3>
+        <h3 class="info-birth_date"></h3>
+      </div>
+      <div class="info">
+        <h3>الرقم القومي : </h3>
+        <h3 class="info-na_number"></h3>
+      </div>
+      <div class="info">
+        <h3>الحالة الأجتماعية : </h3>
+        <h3 class="info-marital_status"></h3>
+      </div>
+      <div class="info">
+        <h3>عدد الأبناء : </h3>
+        <h3 class="info-num_of_children"></h3>
+      </div>
+      <div class="info">
+        <h3>العمر : </h3>
+        <h3 class="info-age"></h3>
+      </div>
+      <div class="info">
+        <h3>رقم التليفون : </h3>
+        <h3 class="info-mobile"></h3>
+      </div>
+      <div class="info">
+        <h3>المؤهل العلمي : </h3>
+        <h3 class="info-Academic_qualification"></h3>
+      </div>
+      <div class="info">
+        <h3>المحافظة : </h3>
+        <h3 class="info-governorate"></h3>
+      </div>
+      <div class="info">
+        <h3>المهنة الحالية : </h3>
+        <h3 class="info-work"></h3>
+      </div>
+      <div class="info">
+        <h3>المدينة : </h3>
+        <h3 class="info-city"></h3>
+      </div>
+      <div class="info">
+        <h3>المركز : </h3>
+        <h3 class="info-center"></h3>
+      </div>
+      <div class="info">
+        <h3>المدينة : </h3>
+        <h3 class="info-city"></h3>
+      </div>
+
+      <div class="info">
+        <h3>قرية / شارع : </h3>
+        <h3 class="info-Village_Street"></h3>
+      </div>
+      <div class="info">
+        <h3> رقم ارضي : </h3>
+        <h3 class="info-landline"></h3>
+      </div>
+
+
+    </div>
+
+    <div id="orders-container">
+      <h2 class="mb-3 font-bold text-xl">الطلبات الحالية :</h2>
+     <div class="orders-parent">
+
+     </div>
+    </div>
+
+    
+    <!-- Modal -->
+    <div id="myModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center ">
+      <div class="bg-white px-5 w-[90%]   lg:w-[350px] h-[450px]  p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
+        <h2 class="text-2xl font-bold mb-4">طلب جديد</h2>
+        <p class="w-[70%] text-md leading-[20px] text-center font-semibold">سوف نقوم بأضافة طلب جديد بنفس معلومات حسابك الحالي , هل أنت مستعد لأضافة طلب  جديد ؟</p>
+        <form id="serviceForm" class="flex flex-col gap-4">
+          <select name="service_name[]" class="service-name w-[250px] mx-auto block rounded-full h-[45px] bg-gray-300 outline-none px-4">
+              <option value="" disabled selected>اختر الخدمة 1</option>
+              <!-- خيارات الخدمة من المصفوفة -->
+              <option value="تجارة">تجارة</option>
+              <option value="زراعة">زراعة</option>
+              <option value="صحة">صحة</option>
+              <option value="صناعة">صناعة</option>
+              <option value="عماله بالخارج">عماله بالخارج</option>
+              <option value="بحث علمي">بحث علمي</option>
+              <option value="تعليم">تعليم</option>
+              <option value="أستثمار">أستثمار</option>
+              <option value="تأمين">تأمين</option>
+              <option value="رياضة">رياضة</option>
+              <option value="برمجه">برمجه</option>
+              <option value="نقل">نقل</option>
+              <option value="سياحة">سياحة</option>
+              <option value="عمل بالداخل">عمل بالداخل</option>
+              <option value="تنمية مشاريع">تنمية مشاريع</option>
+          </select>
+          <select name="service_name[]" class="service-name w-[250px] mx-auto block rounded-full h-[45px] bg-gray-300 outline-none px-4">
+              <option value="" disabled selected>اختر الخدمة 2</option>
+              <!-- خيارات الخدمة من المصفوفة -->
+              <option value="تجارة">تجارة</option>
+              <option value="زراعة">زراعة</option>
+              <option value="صحة">صحة</option>
+              <option value="صناعة">صناعة</option>
+              <option value="عماله بالخارج">عماله بالخارج</option>
+              <option value="بحث علمي">بحث علمي</option>
+              <option value="تعليم">تعليم</option>
+              <option value="أستثمار">أستثمار</option>
+              <option value="تأمين">تأمين</option>
+              <option value="رياضة">رياضة</option>
+              <option value="برمجه">برمجه</option>
+              <option value="نقل">نقل</option>
+              <option value="سياحة">سياحة</option>
+              <option value="عمل بالداخل">عمل بالداخل</option>
+              <option value="تنمية مشاريع">تنمية مشاريع</option>
+          </select>
+      </form>
+      
+    
+
+         <div class="flex  items-center justify-around  w-full ">
+          <button id="closeModalBtn" class="bg-red-500  h-[40px] text-xl cursor-pointer w-[20%] h-[30px] text-white px-4 py-2 rounded">ألغاء</button>
+        <button id="confirmModalBtn" class="bg-green-500  h-[40px] text-xl cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded">تأكيد</button>
+         </div>
+      </div>
+    </div>
+
+ 
+    
+  
+
+      
+    <div id="closeAccountModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
+      <div class="bg-white px-5 w-[90%]   lg:w-[350px] h-[350px]  p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
+        <h2 class="text-2xl font-bold mb-4"> أغلاق الحساب</h2>
+         <ul class="flex flex-col gap-3">
+          <li class="font-bold">* أغلاق الحساب سوف يستغرق 10 أيام</li>
+          <li class="font-bold">* في حالة أغلاق الحساب من : <br> يوم ألي 29 يوم   يتم أرجاع 50% من الأموال </li>
+          <li class="font-bold">* في حالة أغلاق الحساب من : <br> 30 يوم فأكثر   يتم أرجاع 75% من الأموال </li>
+
+          
+         </ul>
+         <div class="flex  items-center justify-around  w-full ">
+          <button id="closeAccountModalBtn" class="bg-red-500 text-xl h-[40px] cursor-pointer w-[20%] h-[30px] text-white px-4 py-2 rounded">ألغاء</button>
+<button id="nextFinishModalBtn"
+  class="bg-green-500 text-xl h-[40px] cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded">التالي</button>
+         </div>
+      </div>
+    </div>
+
+<div id="finishModal" class="fixed inset-0 bg-gray-500 bg-opacity-50 flex justify-center items-center hidden">
+  <div
+    class="bg-white px-5 w-[90%] lg:w-[350px] h-[500px] p-6 rounded-lg shadow-lg flex flex-col gap-5 justify-center items-center">
+    <h2 class="text-2xl font-bold mb-4">أغلاق الحساب</h2>
+    <form id="accountClosureForm" class="w-[80%] flex flex-col gap-5">
+      <div class="flex flex-col gap-3">
+        <label for="name" class="font-semibold text-lg block mb-2">أسم صاحب الحساب</label>
+        <input type="text" id="name" placeholder="الأسم رباعي"
+          class="w-full rounded-full h-[45px] bg-gray-300 outline-none px-4">
+      </div>
+      <div class="flex flex-col gap-3">
+        <label for="account_number_bank" class="font-semibold text-lg block mb-2">رقم الحساب</label>
+        <input type="text" id="account_number_bank" placeholder="رقم الحساب"
+          class="w-full rounded-full h-[45px] bg-gray-300 outline-none px-4">
+      </div>
+      <div class="flex flex-col gap-3">
+        <label for="mobile_wallet" class="font-semibold text-lg block mb-2">رقم الجوال المسجل بالحساب</label>
+        <input type="text" id="mobile_wallet" placeholder="رقم الجوال"
+          class="w-full rounded-full h-[45px] bg-gray-300 outline-none px-4">
+      </div>
+    </form>
+
+    <div class="flex items-center justify-around w-full">
+      <button id="closeFinishModalBtn"
+        class="bg-red-500 text-xl cursor-pointer w-[20%] h-[30px] text-white px-4 py-2 rounded">ألغاء</button>
+      <button id="submitFinishModalBtn"
+        class="bg-green-500 text-xl cursor-pointer text-white w-[20%] h-[30px] px-4 py-2 rounded">أرسال</button>
+
+    </div>
+  </div>
+</div>
+
+  </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    // Function to upload the profile picture
+    // function uploadProfilePicture(event) {
+    //   const file = event.target.files[0];
+    //   if (file) {
+    //     const reader = new FileReader();
+    //     reader.onload = function (e) {
+    //       document.getElementById('profile-picture').src = `highleveltecknology.com/beehive/${e.target.result}`;
+    //     };
+    //     reader.readAsDataURL(file);
+    //   }
+    // }
+
+    // Function to fetch and display user profile data
+    $(document).ready(function () {
+      const token = localStorage.getItem('token');
+      const userData = JSON.parse(localStorage.getItem('userData'));
+      const clientId = userData ? userData.client.id : null;
+      // let clientId = null; // تعريف المتغير خارج الـ if
+
+      // if (userData) {
+      //   const parsedData = JSON.parse(userData);
+      //   clientId = parsedData.client.id;
+      //   console.log(clientId);
+      // } else {
+      //   console.log('userData غير موجود في localStorage');
+      // }
+
+      $.ajax({
+        url: `https://khaleiatnahel.com/beehive/api/show_my_account/${clientId}`,  // The API URL
+        type: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token  // Send the token in the header
+        },
+        success: function (response) {
+          if (response.success) {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            console.log(userData.client.name);
+
+
+            // Update the profile name and image
+            $('#profile-name').text(userData.client.name);
+            $('.info-name').text(userData.client.name);
+            $('.info-birth_date').text(userData.client.birth_date);
+            $('.info-na_number').text(userData.client.na_number);
+            $('.info-gendar').text(userData.client.gender);
+            $('.info-marital_status').text(userData.client.marital_status);
+            $('.info-num_of_children').text(userData.client.num_of_children);
+            $('.info-age').text(userData.client.age);
+            $('.info-mobile').text(userData.client.mobile);
+            $('.info-Academic_qualification').text(userData.client.Academic_qualification);
+            $('.info-governorate').text(userData.client.governorate);
+            $('.info-work').text(userData.client.work);
+            $('.info-city').text(userData.client.city);
+            $('.info-center').text(userData.client.center);
+            $('.info-Village_Street').text(userData.client.Village_Street);
+            $('.info-center').text(userData.client.center);
+            $('.info-landline').text(userData.client.landline);
+
+            $('.personal-info').click(function () {
+               $('#orders-container').css('display', 'none');
+              $('.info-parent').css('display', 'block');
+            }); 
+            
+
+
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error('Error fetching profile data:', error);
+        }
+      });
+    });
+
+
+  $(document).ready(function () {
+      const token = localStorage.getItem('token');
+      const userData = localStorage.getItem('userData');
+      let clientId = null; // تعريف المتغير خارج الـ if
+
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        clientId = parsedData.client.id;
+        console.log(clientId);
+      } else {
+        console.log('userData غير موجود في localStorage');
+      }
+
+      // التأكد من أن clientId معرف قبل تنفيذ الـ Ajax
+      if (clientId) {
+        $.ajax({
+          url: `https://khaleiatnahel.com/beehive/api/show_all_my_order/${clientId}`,
+          method: 'GET',
+          headers: {
+            'Authorization': 'Bearer ' + token  // إرسال التوكن في الهيدر
+          },
+          dataType: 'json',
+          success: function (response) {
+            localStorage.setItem('order_id' , response.my_orders[1].id);
+            
+            if (response.success) {
+              let order_id = response.my_orders;
+              console.log(order_id[0].order_id);
+
+              let ordersHtml = '';
+              response.my_orders.forEach(function (order) {
+                ordersHtml += `
+              <div class="order-card">
+                  <p><strong>الطلب :</strong> ${order.service_name}</p>
+                  <i class="fa-solid fa-trash-can"></i>
+              </div>
+            `;
+              });
+
+              $('.orders-parent').html(ordersHtml);
+            } else {
+              $('.orders-parent').html('<p>حدث خطأ في جلب البيانات.</p>');
+            }
+          },
+          error: function () {
+            $('#orders-container').html('<p>فشل الاتصال بالخادم. حاول مرة أخرى لاحقًا.</p>');
+          }
+        });
+      }
+
+      $('.current-orders').click(function () {
+        $('.info-parent').css('display', 'none');
+        $('#orders-container').css('display', 'block');
+      });
+    });
+
+      $(document).ready(function () {
+          $('.profile-item:has(.fa-right-from-bracket)').click(function () {
+            // حذف التوكين من localStorage
+            localStorage.removeItem('token');
+
+            // التوجيه لصفحة تسجيل الدخول
+            window.location.href = 'login.html';
+          });
+        });
+
+        $(document).ready(function() {
+  // تأكد من أن جميع المودالات مخفية عند تحميل الصفحة
+  $('#myModal').addClass('hidden');
+  $('#cancelModal').addClass('hidden');
+  $('#closeAccountModal').addClass('hidden');
+  $('#finishModal').addClass('hidden'); // تأكد من أن مودال "finishModal" مخفي
+
+  // عندما يتم الضغط على الزر الأول (طلب جديد)
+  $('#openModalBtn').click(function() {
+    $('#myModal').removeClass('hidden'); // إظهار المودال الأول
+  });
+
+
+
+  // عندما يتم الضغط على الزر الثالث (إغلاق الحساب)
+  $('#openCloseAccountModalBtn').click(function() {
+    $('#closeAccountModal').removeClass('hidden'); // إظهار المودال الثالث
+  });
+
+  // عندما يتم الضغط على زر الإغلاق في المودال الأول
+  $('#closeModalBtn').click(function() {
+    $('#myModal').addClass('hidden'); // إخفاء المودال الأول
+  });
+
+  // عندما يتم الضغط على زر الإغلاق في المودال الثاني
+  $('#closeCancelModalBtn').click(function() {
+    $('#cancelModal').addClass('hidden'); // إخفاء المودال الثاني
+  });
+
+  // عندما يتم الضغط على زر الإغلاق في المودال الثالث
+  $('#closeAccountModalBtn').click(function() {
+    $('#closeAccountModal').addClass('hidden'); // إخفاء المودال الثالث
+  });
+
+  // عندما يتم الضغط على زر التالي في المودال الثالث
+  $('#confirmAccountModalBtn').click(function() {
+    $('#closeAccountModal').addClass('hidden'); // إخفاء المودال الثالث
+    $('#finishModal').removeClass('hidden'); // إظهار المودال "finishModal"
+  });
+
+  // عندما يتم الضغط على زر "ألغاء" في المودال الرابع
+  $('#closeFinishModalBtn').click(function() {
+    $('#finishModal').addClass('hidden'); // إخفاء المودال الرابع
+  });
+
+  // يمكنك أيضًا إغلاق المودال عند الضغط في أي مكان خارج المودال
+  $('#myModal').click(function(event) {
+    if (event.target === this) {
+      $(this).addClass('hidden'); // إخفاء المودال الأول
+    }
+  });
+
+  $('#cancelModal').click(function(event) {
+    if (event.target === this) {
+      $(this).addClass('hidden'); // إخفاء المودال الثاني
+    }
+  });
+
+  $('#closeAccountModal').click(function(event) {
+    if (event.target === this) {
+      $(this).addClass('hidden'); // إخفاء المودال الثالث
+    }
+  });
+
+  $('#finishModal').click(function(event) {
+    if (event.target === this) {
+      $(this).addClass('hidden'); // إخفاء المودال الرابع
+    }
+  });
+});
+
+
+  $(document).ready(function () {
+      const token = localStorage.getItem('token');
+      const userData = localStorage.getItem('userData');
+      let clientId = null;
+
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        clientId = parsedData.client.id;
+        console.log("Client ID:", clientId);
+      } else {
+        console.log('userData غير موجود في localStorage');
+      }
+
+      $('#nextFinishModalBtn').on('click', function () {
+        $('#closeAccountModal').addClass('hidden');
+        $('#finishModal').removeClass('hidden');
+      });
+
+      $('#closeFinishModalBtn').on('click', function () {
+        $('#finishModal').addClass('hidden');
+      });
+
+      $('#submitFinishModalBtn').on('click', function (e) {
+        e.preventDefault();
+
+        var name = $('#name').val().trim();
+        var mobile_wallet = $('#mobile_wallet').val().trim();
+        var account_number_bank = $('#account_number_bank').val().trim();
+
+        if (name === '' || mobile_wallet === '' || account_number_bank === '') {
+          Swal.fire({
+            icon: 'warning',
+            title: 'خطأ',
+            text: 'يرجى ملء جميع الحقول',
+            timer: 2000, 
+            
+          });
+          console.log('Validation failed: empty fields');
+          return;
+        }
+
+        if (!clientId) {
+          Swal.fire({
+            icon: 'error',
+            title: 'خطأ',
+            text: 'لم يتم العثور على Client ID',
+            timer: 2000, 
+          });
+          console.log('Client ID غير موجود');
+          return;
+        }
+
+        console.log('Sending data to client ID:', clientId);
+
+        $.ajax({
+          url: `https://khaleiatnahel.com/beehive/api/inactive_my_account/${clientId}`,
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + token
+          },
+          data: {
+            name: name,
+            mobile_wallet: mobile_wallet,
+            account_number_bank: account_number_bank,
+            status: 'inactive',
+          },
+          success: function (response) {
+            Swal.fire({
+              icon: 'success',
+              title: 'تم الإرسال',
+              text: response.message ||  'تم إرسال البيانات بنجاح!',
+              timer: 2000, 
+            });
+            $('#finishModal').addClass('hidden');
+          },
+          error: function (xhr, status, error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'فشل الإرسال',
+              text: error || 'حدث خطأ أثناء إرسال البيانات. حاول مرة أخرى.',
+              timer: 2000, 
+            });
+          },
+        });
+      });
+
+      $('#closeAccountModalBtn').on('click', function () {
+        $('#closeAccountModal').addClass('hidden');
+      });
+    });
+
+
+  $(document).ready(function () {
+    // فتح المودال عند الضغط على "طلب جديد"
+    $('#openModalBtn').click(function () {
+      $('#myModal').fadeIn(); // أو استخدم .show() لإظهاره فوراً
+    });
+
+    // الكود الخاص بالزر "تأكيد" الموجود داخل المودال
+    const token = localStorage.getItem('token');
+    $('#confirmModalBtn').click(function (e) {
+      e.preventDefault();
+
+      // جمع القيم من حقول "أسم الخدمة" باستخدام صنف مشترك
+      const serviceNames = [];
+      $('.service-name').each(function () {
+        const name = $(this).val().trim();
+        if (name !== "") {
+          serviceNames.push(name);
+        }
+      });
+
+      // خدمة التكلفة ثابتة
+      const serviceCost = 3800;
+
+      // التحقق من وجود خدمتين على الأقل
+      if (serviceNames.length < 2) {
+        Swal.fire({
+          icon: 'error',
+          title: 'خطأ',
+          text: 'يجب إدخال اسم خدمتين على الأقل',
+          timer: 2000, 
+        });
+        return;
+      }
+
+      // تجهيز البيانات للإرسال
+      const formData = {
+        service_name: serviceNames,
+        service_cost: serviceCost,
+      };
+
+      // إرسال البيانات بواسطة Ajax مع إضافة التوكن في الهيدر
+      $.ajax({
+        url: 'https://khaleiatnahel.com/beehive/api/add_service',
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        data: JSON.stringify(formData),
+        success: function (response) {
+          Swal.fire({
+            icon: 'success',
+            title: 'تمت الإضافة',
+            text: 'تم إضافة الخدمة بنجاح!',
+            timer: 2000, 
+          });
+          localStorage.setItem("payment_link" , response.payment_url);
+          
+          $('#myModal').fadeOut();
+        },
+        error: function (xhr, status, error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'خطأ',
+            text: 'حدث خطأ أثناء الإضافة. حاول مرة أخرى!',
+            timer: 2000, 
+          });
+        },
+      });
+    });
+
+    // إغلاق المودال عند الضغط على زر الإغلاق
+    $('#closeModalBtn').click(function () {
+      $('#myModal').fadeOut();
+    });
+  });
+
+
+ $(document).ready(function () {
+    $('#confirmCancelModalBtn').click(function (e) {
+      e.preventDefault();
+
+      // قراءة الرقم من الحقل داخل المودال
+      var mobile_wallet = $('#cancelModal').find('input[placeholder="أدخل الرقم"]').val().trim();
+
+      if (mobile_wallet === "") {
+        Swal.fire({
+          icon: 'error',
+          title: 'خطأ',
+          text: 'يرجى إدخال الرقم',
+          timer: 2000, 
+        });
+        return;
+      }
+
+      // الحصول على التوكن من localStorage
+      var token = localStorage.getItem('token');
+
+      // إرسال الرقم بواسطة Ajax مع إضافة التوكن في الهيدر والبيانات status: "inactive"
+      $.ajax({
+        url: 'https://khaleiatnahel.com/beehive/api/inactive_order/10',
+        type: 'POST',
+        data: {
+          mobile_wallet: mobile_wallet,
+          status: "inactive"
+        },
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        success: function (response) {
+          // عرض الرسالة المرجعة من الباك إند في SweetAlert
+          Swal.fire({
+            icon: 'success',
+            title: 'تم بنجاح',
+            text: response.message || 'تم إرسال الرقم بنجاح!',
+            timer: 2000, 
+          });
+          $('#cancelModal').hide();
+        },
+        error: function (xhr, status, error) {
+          
+          Swal.fire({
+            icon: 'error',
+            title: 'خطأ',
+            text: error || 'حدث خطأ أثناء الإرسال. حاول مرة أخرى!',
+            timer: 2000, 
+          });
+        }
+      });
+    });
+
+    // إغلاق المودال عند الضغط على زر الإلغاء
+    $('#closeCancelModalBtn').click(function () {
+      $('#cancelModal').hide();
+    });
+  });
+
+ $(document).ready(function () {
+    $('#confirmCancelModalBtn').click(function (e) {
+      e.preventDefault();
+
+      var mobile_wallet = $('#cancelModal').find('input[placeholder="أدخل الرقم"]').val().trim();
+      if (mobile_wallet === "") {
+        Swal.fire({ icon: 'error', title: 'خطأ', text: 'يرجى إدخال الرقم' ,  timer: 2000 });
+        return;
+      }
+
+      var token = localStorage.getItem('token');
+      const userData = localStorage.getItem('userData');
+      let clientId = null;
+
+      if (userData) {
+        const parsedData = JSON.parse(userData);
+        clientId = parsedData.client.id;
+        console.log("Client ID:", clientId);
+      } else {
+        console.log('userData غير موجود في localStorage');
+      }
+
+      if (!clientId) {
+        Swal.fire({ icon: 'error', title: 'خطأ', text: 'رقم العميل غير موجود' ,  timer: 2000 });
+        return;
+      }
+
+      // جلب الطلبات للحصول على order_id
+      $.ajax({
+        url: `https://khaleiatnahel.com/beehive/api/show_all_my_order/${clientId}`,
+        type: 'GET',
+        headers: { 'Authorization': `Bearer ${token}` },
+        success: function (response) {
+          console.log("API Response:", response);
+
+          if (response.success && response.my_orders.length > 0) {
+            var order_id = response.my_orders[0].order_id;
+            console.log("Order ID:", order_id);
+
+            if (!order_id) {
+              Swal.fire({ icon: 'error', title: 'خطأ', text: 'لم يتم العثور على رقم الطلب' ,  timer: 2000 });
+              return;
+            }
+
+            // إرسال الطلب
+            $.ajax({
+              url: `https://khaleiatnahel.com/beehive/api/inactive_order/${order_id}`,
+              type: 'POST',
+              data: JSON.stringify({ mobile_wallet: mobile_wallet, status: "inactive" }),
+              contentType: "application/json",
+              headers: { 'Authorization': `Bearer ${token}` },
+              success: function (res) {
+                Swal.fire({ icon: 'success', title: 'تم بنجاح', text: res.message || 'تم إرسال الرقم بنجاح!' ,  timer: 2000});
+                $('#cancelModal').hide();
+              },
+              error: function (xhr, status, error) {
+                console.log("Error Response:", xhr.responseText);
+                Swal.fire({ icon: 'error', title: 'خطأ', text: xhr.responseText || 'حدث خطأ أثناء الإرسال. حاول مرة أخرى!' ,  timer: 2000});
+              }
+            });
+
+          } 
+        },
+        error: function (xhr, status, error) {
+          console.log("Fetch Orders Error:", xhr.responseText);
+          Swal.fire({ icon: 'error', title: 'خطأ', text: error ,  timer: 2000 });
+        }
+      });
+    });
+
+    $('#closeCancelModalBtn').click(function () {
+      $('#cancelModal').hide();
+    });
+  });
+
+          window.onload = function () {
+            // التحقق من وجود التوكن في localStorage
+            const token = localStorage.getItem("token");
+            const startButton = document.getElementById("startRequestButton");
+            if (!token) {
+              window.location.href = "login.html";
+
+            }
+          };
+   
+          $('#cancel-order-son').on('click', function() {
+    let order_id = localStorage.getItem('order_id'); // الحصول على order_id من LocalStorage
+    let token = localStorage.getItem('token'); // الحصول على التوكن من LocalStorage (أو من أي مصدر آخر)
+
+    // عرض نافذة تأكيد SweetAlert
+    Swal.fire({
+        title: 'هل أنت متأكد من إلغاء الطلب؟',
+        text: 'لا يمكنك التراجع عن هذا الإجراء!',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'تأكيد',
+        cancelButtonText: 'إلغاء',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `https://khaleiatnahel.com/beehive/api/orders_cancel/${order_id}`, // الرابط الذي سيتم إرسال الطلب إليه
+                type: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}` // إرسال التوكن في الهيدر
+                },
+                success: function(response) {
+                    // التحقق من نجاح أو فشل الطلب بناءً على الرد من السيرفر
+                    if (response[0] === "success") {
+                        // في حال النجاح
+                        Swal.fire(
+                            'تم الإلغاء!',
+                            response[1], // رسالة النجاح من الرد
+                            'success'
+                        );
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // إذا حدث خطأ أثناء إرسال الطلب
+                    let errorMessage = 'حدث خطأ أثناء إلغاء الطلب.';
+
+                    // التحقق من وجود أخطاء في الاستجابة
+                    if (xhr.responseJSON && xhr.responseJSON.error) {
+                        // إذا كانت هناك أخطاء في الرد
+                        let errorDetails = xhr.responseJSON.error;
+                        errorMessage = errorDetails.order_id ? errorDetails.order_id[0] : 'حدث خطأ غير معروف.';
+                    }
+
+                    // عرض رسالة الخطأ باستخدام SweetAlert
+                    Swal.fire(
+                        'خطأ!',
+                        errorMessage,
+                        'error'
+                    );
+                }
+            });
+        } else {
+            // إذا ضغط المستخدم على إلغاء، عرض رسالة
+            Swal.fire(
+                'تم الإلغاء',
+                'لم يتم إلغاء الطلب.',
+                'info'
+            );
+        }
+    });
+});
+$(document).ready(function () { 
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('userData');
+    let clientId = null;
+
+    if (userData) {
+        const parsedData = JSON.parse(userData);
+        clientId = parsedData.client.id;
+        console.log(clientId);
+    } else {
+        console.log('userData غير موجود في localStorage');
+    }
+
+    if (clientId) {
+        $.ajax({
+            url: `https://khaleiatnahel.com/beehive/api/show_all_my_order/${clientId}`,
+            method: 'GET',
+            headers: {
+                'Authorization': 'Bearer ' + token
+            },
+            dataType: 'json',
+            success: function (response) {
+                localStorage.setItem('order_id', response.my_orders[1].id);
+                
+                if (response.success) {
+                    let ordersHtml = '';
+                    response.my_orders.forEach(function (order, index) {
+                        // إضافة زر الحذف مع id الخاص بالطلب
+                        ordersHtml += `
+                            <div class="order-card">
+                                <p><strong>الطلب :</strong> ${order.service_name}</p>
+                                <i class="fa-solid fa-trash-can" data-order-id="${order.id}" style="cursor: pointer;"></i>
+                            </div>
+                        `;
+                    });
+
+                    $('.orders-parent').html(ordersHtml);
+                } else {
+                    $('.orders-parent').html('<p>حدث خطأ في جلب البيانات.</p>');
+                }
+            },
+            error: function () {
+                $('#orders-container').html('<p>فشل الاتصال بالخادم. حاول مرة أخرى لاحقًا.</p>');
+            }
+        });
+    }
+
+    // حدث النقر على أيقونة سلة المهملات (حذف)
+    $(document).on('click', '.fa-trash-can', function () {
+        let orderId = $(this).data('order-id'); // الحصول على id الطلب من data-attribute
+        let token = localStorage.getItem('token'); // الحصول على التوكن من LocalStorage
+
+        // عرض نافذة تأكيد SweetAlert
+        Swal.fire({
+            title: 'هل أنت متأكد من إلغاء الطلب؟',
+            text: 'لا يمكنك التراجع عن هذا الإجراء!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'تأكيد',
+            cancelButtonText: 'إلغاء',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: `https://khaleiatnahel.com/beehive/api/orders_cancel/${orderId}`,
+                    type: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    success: function(response) {
+                        if (response[0] === "success") {
+                            // عرض رسالة تأكيد بعد إتمام العملية بنجاح
+                            Swal.fire(
+                                'تم الإلغاء!',
+                                response[1], // رسالة النجاح من الرد
+                                'success'
+                            );
+                        } else {
+                            // إذا كان هناك مشكلة أو الرفض من الخادم
+                            Swal.fire(
+                                'خطأ!',
+                                response[1] || 'حدث خطأ أثناء إلغاء الطلب.',
+                                'error'
+                            );
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        let errorMessage = 'حدث خطأ أثناء إلغاء الطلب.';
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            let errorDetails = xhr.responseJSON.error;
+                            errorMessage = errorDetails.order_id ? errorDetails.order_id[0] : 'حدث خطأ غير معروف.';
+                        }
+
+                        Swal.fire(
+                            'خطأ!',
+                            errorMessage,
+                            'error'
+                        );
+                    }
+                });
+            } else {
+                Swal.fire(
+                    'تم الإلغاء',
+                    'لم يتم إلغاء الطلب.',
+                    'info'
+                );
+            }
+        });
+    });
+
+    // فتح قسم الطلبات عند الضغط على الزر
+    $('.current-orders').click(function () {
+        $('.info-parent').css('display', 'none');
+        $('#orders-container').css('display', 'block');
+    });
+});
+
+  </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+
+</html>
