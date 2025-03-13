@@ -819,6 +819,7 @@
             timer: 2000, 
           });
           localStorage.setItem("payment_link" , response.payment_url);
+           window.location.href = response.payment_url
           
           $('#myModal').fadeOut();
         },
