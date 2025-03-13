@@ -116,40 +116,25 @@
                 <div class="text-center">
                     <a id="startRequestButton" href="page3.html" class="btn btn-custom btn-lg">أبدأ الطلب</a>
                 </div>
-                <div class="text-center">
-                    <a id="startRequestButton" href="profail.html" class="btn btn-custom btn-lg">المتابعة بدون طلب</a>
-                </div>
+              
             </div>
         </div>
     </div>
      <script>
-        window.onload = function() {
-    // التحقق من وجود التوكن في localStorage
-    const token = localStorage.getItem("token");
-    const startButton = document.getElementById("startRequestButton");
-    if(!token){
-            window.location.href = "login.html";
 
-    }
-};
-        window.onload = function() {
-        // التحقق من وجود التوكن في localStorage
-        const token = localStorage.getItem("token");
-        if (!token) {
-            window.location.href = "login.html";
-        }
-
+   window.onload = function () {
         // منع الانتقال للصفحة التالية إلا بعد إدخال الاسم
         const startButton = document.getElementById("startRequestButton");
         const nameInput = document.querySelector(".in");
 
-        startButton.addEventListener("click", function(event) {
+        startButton.addEventListener("click", function (event) {
             if (nameInput.value.trim() === "") {
-            event.preventDefault(); // منع الانتقال
-        alert("الرجاء إدخال الاسم الرباعي قبل المتابعة.");
+                event.preventDefault(); // منع الانتقال
+                alert("الرجاء إدخال الاسم الرباعي قبل المتابعة.");
             }
         });
     };
+
 
 
      </script>
