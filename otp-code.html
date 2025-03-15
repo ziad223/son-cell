@@ -186,6 +186,9 @@
 
 <script>
     $(document).ready(function () {
+          if (!localStorage.getItem("token")) {
+            window.location.href = "login.html";
+        }
         $("#login-form").on("submit", function (e) {
             e.preventDefault();
 
@@ -208,7 +211,6 @@
                 method: "POST",
                 data: { otp: otp }, // إرسال قيمة OTP
                 success: function (response) {
-<<<<<<< HEAD
                     if (response.status) {
                         Swal.fire({
                             title: "نجاح!",
@@ -234,7 +236,7 @@
                             confirmButtonText: "موافق"
                         });
                     }
-=======
+
                     Swal.fire({
                         title: response.status ? "نجاح!" : "خطأ!",
                         text: response.message,
@@ -245,7 +247,6 @@
                     setTimeout(function () {
                         window.location.href = "reset-password.html";
                     }, 2000);
->>>>>>> a12eadc756551f2bb435eddfe5c4a31c6b13b3c7
                 },
                 error: function () {
                     Swal.fire({
