@@ -192,9 +192,7 @@
                 window.location.href = "login.html";
             }
             $("#login-form").on("submit", function (e) {
-                  if (!localStorage.getItem("token")) {
-                    window.location.href = "login.html";
-                }
+              
                 e.preventDefault();
 
                 var otp = $("input[name='email']").val().trim(); // الحصول على قيمة الإدخال
