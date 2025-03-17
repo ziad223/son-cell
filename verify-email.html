@@ -187,8 +187,10 @@
 
     <script>
         $(document).ready(function () {
-             if (!localStorage.getItem("token")) {
-                // إعادة التوجيه إلى صفحة تسجيل الدخول
+             const previousPage = localStorage.getItem("previousPage");
+            const token = localStorage.getItem("token");
+
+            if (!token && previousPage !== "signup") {
                 window.location.href = "login.html";
             }
             $("#login-form").on("submit", function (e) {

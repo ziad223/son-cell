@@ -144,7 +144,12 @@
     </body>
     <script>
                 window.onload = function () {
-                   
+                    const previousPage = localStorage.getItem("previousPage");
+                    const token = localStorage.getItem("token");
+
+                    if (!token && previousPage !== "signup") {
+                        window.location.href = "login.html";
+                    }
                         const startButton = document.getElementById("startRequestButton");
                        
                     };
