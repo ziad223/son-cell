@@ -763,82 +763,123 @@
 
 
   $(document).ready(function () {
-    // فتح المودال عند الضغط على "طلب جديد"
-    $('#openModalBtn').click(function () {
-      $('#myModal').fadeIn(); // أو استخدم .show() لإظهاره فوراً
-    });
-
-    // الكود الخاص بالزر "تأكيد" الموجود داخل المودال
-    const token = localStorage.getItem('token');
-    $('#confirmModalBtn').click(function (e) {
-      e.preventDefault();
-
-      // جمع القيم من حقول "أسم الخدمة" باستخدام صنف مشترك
-      const serviceNames = [];
-      $('.service-name').each(function () {
-        const name = $(this).val().trim();
-        if (name !== "") {
-          serviceNames.push(name);
-        }
+      $('#openModalBtn').click(function () {
+        $('#myModal').fadeIn();
       });
 
-      // خدمة التكلفة ثابتة
-      const serviceCost = 3800;
+      const token = localStorage.getItem('token');
 
-      // التحقق من وجود خدمتين على الأقل
-      if (serviceNames.length < 2) {
-        Swal.fire({
-          icon: 'error',
-          title: 'خطأ',
-          text: 'يجب إدخال اسم خدمتين على الأقل',
-          timer: 2000, 
+      $('#confirmModalBtn').click(function (e) {
+        e.preventDefault();
+
+        const serviceNames = [];
+        $('.service-name').each(function () {
+          const name = $(this).val().trim();
+          if (name !== "") {
+            serviceNames.push(name);
+          }
         });
-        return;
-      }
 
-      // تجهيز البيانات للإرسال
-      const formData = {
-        service_name: serviceNames,
-        service_cost: serviceCost,
-      };
+        const serviceCost = 3800;
 
-      // إرسال البيانات بواسطة Ajax مع إضافة التوكن في الهيدر
-      $.ajax({
-        url: 'https://khaleiatnahel.com/beehive/api/add_service',
-        type: 'POST',
-        contentType: 'application/json',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        },
-        data: JSON.stringify(formData),
-        success: function (response) {
-          Swal.fire({
-            icon: 'success',
-            title: 'تمت الإضافة',
-            text: 'تم إضافة الخدمة بنجاح!',
-            timer: 2000, 
-          });
-          localStorage.setItem("payment_link" , response.payment_url);
-           window.location.href = response.payment_url
-          
-          $('#myModal').fadeOut();
-        },
-        error: function (xhr, status, error) {
+        if (serviceNames.length < 2) {
           Swal.fire({
             icon: 'error',
             title: 'خطأ',
-            text: 'حدث خطأ أثناء الإضافة. حاول مرة أخرى!',
-            timer: 2000, 
+            text: 'يجب إدخال اسم خدمتين على الأقل',
+            timer: 2000,
           });
-        },
+          return;
+        }
+
+        const formData = {
+          service_name: serviceNames,
+          service_cost: serviceCost,
+        };
+
+        $.ajax({
+          url: 'https://khaleiatnahel.com/beehive/api/add_service',
+          type: 'POST',
+          contentType: 'application/json',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          data: JSON.stringify(formData),
+          success: function (response) {
+            if (response.success && response.payment_data) {
+              // تجهيز البيانات بنفس الهيكل المطلوب
+              const fawryPayload = JSON.stringify({
+                merchantCode: "770000020602",
+                merchantRefNum: response.payment_data.merchantRefNum,
+                customerMobile: response.payment_data.customerMobile,
+                language: "en-gb",
+                chargeItems: [
+                  {
+                    itemId: response.payment_data.chargeItems[0].itemId,
+                    price: parseFloat(response.payment_data.chargeItems[0].price),
+                    quantity: response.payment_data.chargeItems[0].quantity
+                  }
+                ],
+                governorate: response.payment_data.governorate,
+                city: response.payment_data.city,
+                area: response.payment_data.area,
+                address: response.payment_data.address,
+                receiverName: response.payment_data.receiverName,
+                returnUrl: response.payment_data.returnUrl,
+                signature: response.payment_data.signature
+              });
+
+              // إرسال البيانات إلى فوري بنفس التنسيق المطلوب
+              $.ajax({
+                url: 'https://atfawry.fawrystaging.com/fawrypay-api/api/payments/init',
+                type: 'POST',
+                contentType: 'application/json',
+                data: fawryPayload,
+                success: function (fawryResponse) {
+                  if (fawryResponse.payment_url) {
+                    window.location.href = fawryResponse.payment_url;
+                  } else {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'خطأ',
+                      text: 'لم يتم استلام رابط الدفع، حاول مرة أخرى!',
+                      timer: 2000,
+                    });
+                  }
+                },
+                error: function () {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'خطأ',
+                    text: 'حدث خطأ أثناء إرسال البيانات إلى فوري!',
+                    timer: 2000,
+                  });
+                }
+              });
+            } else {
+              Swal.fire({
+                icon: 'error',
+                title: 'خطأ',
+                text: 'لم يتم استلام بيانات الدفع من السيرفر!',
+                timer: 2000,
+              });
+            }
+          },
+          error: function () {
+            Swal.fire({
+              icon: 'error',
+              title: 'خطأ',
+              text: 'حدث خطأ أثناء الإضافة. حاول مرة أخرى!',
+              timer: 2000,
+            });
+          }
+        });
+      });
+
+      $('#closeModalBtn').click(function () {
+        $('#myModal').fadeOut();
       });
     });
-
-    // إغلاق المودال عند الضغط على زر الإغلاق
-    $('#closeModalBtn').click(function () {
-      $('#myModal').fadeOut();
-    });
-  });
 
 
  $(document).ready(function () {
