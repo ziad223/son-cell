@@ -807,7 +807,6 @@
           data: JSON.stringify(formData),
           success: function (response) {
             if (response.success && response.payment_data) {
-              // تجهيز البيانات بنفس الهيكل المطلوب
               const fawryPayload = JSON.stringify({
                 merchantCode: "770000020602",
                 merchantRefNum: response.payment_data.merchantRefNum,
@@ -829,20 +828,38 @@
                 signature: response.payment_data.signature
               });
 
-              // إرسال البيانات إلى فوري بنفس التنسيق المطلوب
               $.ajax({
                 url: 'https://atfawry.fawrystaging.com/fawrypay-api/api/payments/init',
                 type: 'POST',
                 contentType: 'application/json',
                 data: fawryPayload,
                 success: function (fawryResponse) {
-                   Swal.fire({
+                  Swal.fire({
                     icon: 'success',
                     title: 'مبروك!',
                     text: 'تم أضافة الطلب بنجاح!',
                     timer: 2000,
                   });
-                    window.location.href = fawryResponse;
+
+                  // إنشاء المودال داخل jQuery
+                  const modal = $(`
+                <div id="fawryModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;">
+                  <div style="background: white; padding: 20px; text-align: center; width: 300px; border-radius: 10px;">
+                    <h2>تمت إضافة الطلب بنجاح!</h2>
+                    <p>اضغط على الزر أدناه لإكمال الدفع عبر فوري</p>
+                    <a id="goToFawry" href="${fawryResponse}" target="_blank" style="display: inline-block; background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 10px;">إكمال الدفع</a>
+                    <button id="closeFawryModal" style="display: block; margin: 10px auto; background: red; color: white; padding: 10px; border: none; border-radius: 5px;">إغلاق</button>
+                  </div>
+                </div>
+              `);
+
+                  // إضافة المودال إلى الـ body
+                  $('body').append(modal);
+
+                  // زر إغلاق المودال
+                  $('#closeFawryModal').click(function () {
+                    $('#fawryModal').remove();
+                  });
                 },
                 error: function () {
                   Swal.fire({
