@@ -836,16 +836,13 @@
                 contentType: 'application/json',
                 data: fawryPayload,
                 success: function (fawryResponse) {
-                  if (fawryResponse.payment_url) {
-                    window.location.href = fawryResponse.payment_url;
-                  } else {
-                    Swal.fire({
-                      icon: 'error',
-                      title: 'خطأ',
-                      text: 'لم يتم استلام رابط الدفع، حاول مرة أخرى!',
-                      timer: 2000,
-                    });
-                  }
+                   Swal.fire({
+                    icon: 'success',
+                    title: 'مبروك!',
+                    text: 'تم أضافة الطلب بنجاح!',
+                    timer: 2000,
+                  });
+                    window.location.href = fawryResponse;
                 },
                 error: function () {
                   Swal.fire({
