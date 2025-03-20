@@ -18,7 +18,16 @@
       padding: 0;
       box-sizing: border-box;
     }
+   
     .order-card{
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      flex-direction: row !important    ;
+    }
+    .order-canceled{
+      background-color: red !important;
+      color: #fff !important;
       display: flex !important;
       align-items: center;
       justify-content: space-between;
@@ -187,6 +196,18 @@
       gap: 5px;
       width: 30%;
       margin-bottom: 20px !important;
+
+    }
+     .order-canceled{
+      background-color: red !important;
+      padding: 10px 20px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 30%;
+      margin-bottom: 20px !important;
+      color: #fff !important;
 
     }
     .order-card p{
@@ -560,16 +581,16 @@
             if (response.success) {
               let order_id = response.my_orders;
               console.log(order_id[0].order_id);
-
               let ordersHtml = '';
               response.my_orders.forEach(function (order) {
                 ordersHtml += `
-              <div class="order-card">
-                  <p><strong>الطلب :</strong> ${order.service_name}</p>
-                  <i class="fa-solid fa-trash-can"></i>
-              </div>
-            `;
+    <div class="${order.status === 'canceled' ? 'order-canceled' : 'order-card'}">
+        <p><strong>الطلب :</strong> ${order.service_name}</p>
+        <i class="fa-solid fa-trash-can" data-order-id="${order.id}"></i>
+    </div>
+  `;
               });
+
 
               $('.orders-parent').html(ordersHtml);
             } else {
@@ -762,140 +783,141 @@
     });
 
 
-  $(document).ready(function () {
-      $('#openModalBtn').click(function () {
-        $('#myModal').fadeIn();
+ $(document).ready(function () {
+    $('#openModalBtn').click(function () {
+      $('#myModal').fadeIn();
+    });
+
+    const token = localStorage.getItem('token');
+
+    $('#confirmModalBtn').click(function (e) {
+      e.preventDefault();
+
+      const serviceNames = [];
+      $('.service-name').each(function () {
+        const name = $(this).val().trim();
+        if (name !== "") {
+          serviceNames.push(name);
+        }
       });
 
-      const token = localStorage.getItem('token');
-
-      $('#confirmModalBtn').click(function (e) {
-        e.preventDefault();
-
-        const serviceNames = [];
-        $('.service-name').each(function () {
-          const name = $(this).val().trim();
-          if (name !== "") {
-            serviceNames.push(name);
-          }
+      if (serviceNames.length < 2) {
+        Swal.fire({
+          icon: 'error',
+          title: 'خطأ',
+          text: 'يجب إدخال اسم خدمتين على الأقل',
+          timer: 2000,
         });
+        return;
+      }
 
-        const serviceCost = 3800;
+      let confirmBtn = $('#confirmModalBtn');
+      let originalText = confirmBtn.html();
+      confirmBtn.html(`<i class="fa fa-spinner fa-spin"></i>`).prop('disabled', true);
 
-        if (serviceNames.length < 2) {
-          Swal.fire({
-            icon: 'error',
-            title: 'خطأ',
-            text: 'يجب إدخال اسم خدمتين على الأقل',
-            timer: 2000,
-          });
-          return;
-        }
-
-        const formData = {
+      $.ajax({
+        url: 'https://khaleiatnahel.com/beehive/api/add_service',
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        data: JSON.stringify({
           service_name: serviceNames,
-          service_cost: serviceCost,
-        };
-
-        $.ajax({
-          url: 'https://khaleiatnahel.com/beehive/api/add_service',
-          type: 'POST',
-          contentType: 'application/json',
-          headers: {
-            'Authorization': `Bearer ${token}`
-          },
-          data: JSON.stringify(formData),
-          success: function (response) {
-            if (response.success && response.payment_data) {
-              const fawryPayload = JSON.stringify({
-                merchantCode: "770000020602",
-                merchantRefNum: response.payment_data.merchantRefNum,
-                customerMobile: response.payment_data.customerMobile,
-                language: "en-gb",
-                chargeItems: [
-                  {
-                    itemId: response.payment_data.chargeItems[0].itemId,
-                    price: parseFloat(response.payment_data.chargeItems[0].price),
-                    quantity: response.payment_data.chargeItems[0].quantity
-                  }
-                ],
-                governorate: response.payment_data.governorate,
-                city: response.payment_data.city,
-                area: response.payment_data.area,
-                address: response.payment_data.address,
-                receiverName: response.payment_data.receiverName,
-                returnUrl: response.payment_data.returnUrl,
-                signature: response.payment_data.signature
-              });
-
-              $.ajax({
-                url: 'https://atfawry.fawrystaging.com/fawrypay-api/api/payments/init',
-                type: 'POST',
-                contentType: 'application/json',
-                data: fawryPayload,
-                success: function (fawryResponse) {
-                  Swal.fire({
-                    icon: 'success',
-                    title: 'مبروك!',
-                    text: 'تم أضافة الطلب بنجاح!',
-                    timer: 2000,
-                  });
-
-                  // إنشاء المودال داخل jQuery
-                  const modal = $(`
-                <div id="fawryModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;">
-                  <div style="background: white; padding: 20px; text-align: center; width: 300px; border-radius: 10px;">
-                    <h2>تمت إضافة الطلب بنجاح!</h2>
-                    <h3>قم بنسخ هذا الأيميل <br> <strong>lainavacompany@gmail.com</strong> ليتم استخدامه في  واجهة الدفع</h3>
-                    <p>اضغط على الزر أدناه لإكمال الدفع عبر فوري</p>
-
-                    <a id="goToFawry" href="${fawryResponse}" target="_blank" style="display: inline-block; background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 10px;">إكمال الدفع</a>
-                    <button id="closeFawryModal" style="display: block; margin: 10px auto; background: red; color: white; padding: 10px; border: none; border-radius: 5px;">إغلاق</button>
-                  </div>
-                </div>
-              `);
-
-                  // إضافة المودال إلى الـ body
-                  $('body').append(modal);
-
-                  // زر إغلاق المودال
-                  $('#closeFawryModal').click(function () {
-                    $('#fawryModal').remove();
-                  });
-                },
-                error: function () {
-                  Swal.fire({
-                    icon: 'error',
-                    title: 'خطأ',
-                    text: 'حدث خطأ أثناء إرسال البيانات إلى فوري!',
-                    timer: 2000,
-                  });
+          service_cost: 3800,
+        }),
+        success: function (response) {
+          if (response.success && response.payment_data) {
+            const fawryPayload = JSON.stringify({
+              merchantCode: "770000020602",
+              merchantRefNum: response.payment_data.merchantRefNum,
+              customerMobile: response.payment_data.customerMobile,
+              language: "en-gb",
+              chargeItems: [
+                {
+                  itemId: response.payment_data.chargeItems[0].itemId,
+                  price: parseFloat(response.payment_data.chargeItems[0].price),
+                  quantity: response.payment_data.chargeItems[0].quantity
                 }
-              });
-            } else {
-              Swal.fire({
-                icon: 'error',
-                title: 'خطأ',
-                text: 'لم يتم استلام بيانات الدفع من السيرفر!',
-                timer: 2000,
-              });
-            }
-          },
-          error: function () {
+              ],
+              governorate: response.payment_data.governorate,
+              city: response.payment_data.city,
+              area: response.payment_data.area,
+              address: response.payment_data.address,
+              receiverName: response.payment_data.receiverName,
+              returnUrl: response.payment_data.returnUrl,
+              signature: response.payment_data.signature
+            });
+
+            $.ajax({
+              url: 'https://atfawry.fawrystaging.com/fawrypay-api/api/payments/init',
+              type: 'POST',
+              contentType: 'application/json',
+              data: fawryPayload,
+              success: function (fawryResponse) {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'مبروك!',
+                  text: 'تم أضافة الطلب بنجاح!',
+                  timer: 2000,
+                });
+
+                const modal = $(`
+                                <div id="fawryModal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; justify-content: center; align-items: center;">
+                                    <div style="background: white; padding: 20px; text-align: center; width: 300px; border-radius: 10px;">
+                                        <h2>تمت إضافة الطلب بنجاح!</h2>
+                                        <h3>قم بنسخ هذا الأيميل <br> <strong>lainavacompany@gmail.com</strong> ليتم استخدامه في  واجهة الدفع</h3>
+                                        <p>اضغط على الزر أدناه لإكمال الدفع عبر فوري</p>
+
+                                        <a id="goToFawry" href="${fawryResponse}" target="_blank" style="display: inline-block; background: #007bff; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; margin-top: 10px;">إكمال الدفع</a>
+                                        <a href= "profail.html" id="closeFawryModal" style="display: block; margin: 10px auto; background: red; color: white; padding: 10px; border: none; border-radius: 5px;">إغلاق</a>
+                                    </div>
+                                </div>
+                            `);
+
+                $('body').append(modal);
+                $('#closeFawryModal').click(function () {
+                  $('#fawryModal').remove();
+                });
+
+                confirmBtn.html(originalText).prop('disabled', false);
+              },
+              error: function () {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'خطأ',
+                  text: 'حدث خطأ أثناء إرسال البيانات إلى فوري!',
+                  timer: 2000,
+                });
+                confirmBtn.html(originalText).prop('disabled', false);
+              }
+            });
+          } else {
             Swal.fire({
               icon: 'error',
               title: 'خطأ',
-              text: 'حدث خطأ أثناء الإضافة. حاول مرة أخرى!',
+              text: 'لم يتم استلام بيانات الدفع من السيرفر!',
               timer: 2000,
             });
+            confirmBtn.html(originalText).prop('disabled', false);
           }
-        });
-      });
-
-      $('#closeModalBtn').click(function () {
-        $('#myModal').fadeOut();
+        },
+        error: function () {
+          Swal.fire({
+            icon: 'error',
+            title: 'خطأ',
+            text: 'حدث خطأ أثناء الإضافة. حاول مرة أخرى!',
+            timer: 2000,
+          });
+          confirmBtn.html(originalText).prop('disabled', false);
+        }
       });
     });
+
+    $('#closeModalBtn').click(function () {
+      $('#myModal').fadeOut();
+    });
+  });
 
 
  $(document).ready(function () {
@@ -1064,7 +1086,8 @@
                     'Authorization': `Bearer ${token}` // إرسال التوكن في الهيدر
                 },
                 success: function(response) {
-                    // التحقق من نجاح أو فشل الطلب بناءً على الرد من السيرفر
+                  console.log(response);
+                  
                     if (response[0] === "success") {
                         // في حال النجاح
                         Swal.fire(
@@ -1128,16 +1151,27 @@ $(document).ready(function () {
                 localStorage.setItem('order_id', response.my_orders[1].id);
                 
                 if (response.success) {
-                    let ordersHtml = '';
-                    response.my_orders.forEach(function (order, index) {
-                        // إضافة زر الحذف مع id الخاص بالطلب
-                        ordersHtml += `
-                            <div class="order-card">
-                                <p><strong>الطلب :</strong> ${order.service_name}</p>
-                                <i class="fa-solid fa-trash-can" data-order-id="${order.id}" style="cursor: pointer;"></i>
-                            </div>
-                        `;
-                    });
+                  let ordersHtml = '';
+                  response.my_orders.forEach(function (order, index) {
+                    console.log(order);
+
+                    // تحديد الكلاس بناءً على حالة الطلب
+                    let orderClass = order.status === 'canceled' ? 'order-card order-canceled' : 'order-card';
+
+                    // إذا لم يكن الطلب ملغي، نعرض أيقونة الحذف
+                    let deleteIcon = order.status !== 'canceled' ?
+                      `<i class="fa-solid fa-trash-can" data-order-id="${order.id}" style="cursor: pointer;"></i>`
+                      : '';
+
+                    // إضافة الطلب مع الأيقونة (إذا لم يكن ملغي)
+                    ordersHtml += `
+        <div class="${orderClass}">
+            <p><strong>الطلب :</strong> ${order.service_name}</p>
+            ${deleteIcon}
+        </div>
+    `;
+                  });
+
 
                     $('.orders-parent').html(ordersHtml);
                 } else {
@@ -1151,67 +1185,158 @@ $(document).ready(function () {
     }
 
     // حدث النقر على أيقونة سلة المهملات (حذف)
-    $(document).on('click', '.fa-trash-can', function () {
-        let orderId = $(this).data('order-id'); // الحصول على id الطلب من data-attribute
-        let token = localStorage.getItem('token'); // الحصول على التوكن من LocalStorage
+   $(document).on('click', '.fa-trash-can', function () {
+    let orderId = $(this).data('order-id'); // الحصول على ID الطلب من الـ data-attribute
+    let token = localStorage.getItem('token'); // الحصول على التوكن من LocalStorage
 
-        // عرض نافذة تأكيد SweetAlert
-        Swal.fire({
-            title: 'هل أنت متأكد من إلغاء الطلب؟',
-            text: 'لا يمكنك التراجع عن هذا الإجراء!',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'تأكيد',
-            cancelButtonText: 'إلغاء',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: `https://khaleiatnahel.com/beehive/api/orders_cancel/${orderId}`,
-                    type: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
-                    success: function(response) {
-                        if (response[0] === "success") {
-                            // عرض رسالة تأكيد بعد إتمام العملية بنجاح
-                            Swal.fire(
-                                'تم الإلغاء!',
-                                response[1], // رسالة النجاح من الرد
-                                'success'
-                            );
-                        } else {
-                            // إذا كان هناك مشكلة أو الرفض من الخادم
-                            Swal.fire(
-                                'خطأ!',
-                                response[1] || 'حدث خطأ أثناء إلغاء الطلب.',
-                                'error'
-                            );
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        let errorMessage = 'حدث خطأ أثناء إلغاء الطلب.';
-                        if (xhr.responseJSON && xhr.responseJSON.error) {
-                            let errorDetails = xhr.responseJSON.error;
-                            errorMessage = errorDetails.order_id ? errorDetails.order_id[0] : 'حدث خطأ غير معروف.';
-                        }
+    // عرض نافذة تأكيد SweetAlert
+    Swal.fire({
+      title: 'هل أنت متأكد من إلغاء الطلب؟',
+      text: 'لا يمكنك التراجع عن هذا الإجراء!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'تأكيد',
+      cancelButtonText: 'إلغاء',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: `https://khaleiatnahel.com/beehive/api/orders_cancel/${orderId}`,
+          type: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          success: function (response) {
+            console.log("API Response:", response); // التحقق من هيكلة الاستجابة
 
-                        Swal.fire(
-                            'خطأ!',
-                            errorMessage,
-                            'error'
-                        );
-                    }
-                });
+            // التحقق مما إذا كان الرد كائن يحتوي على `status` و `message`
+            if (response[0] === "success") {
+              Swal.fire(
+                'تم الإلغاء!',
+                response.message || 'تم إلغاء الطلب بنجاح.',
+                'success'
+              );
             } else {
-                Swal.fire(
-                    'تم الإلغاء',
-                    'لم يتم إلغاء الطلب.',
-                    'info'
-                );
+              Swal.fire(
+                'خطأ!',
+                response.message || 'حدث خطأ أثناء الإلغاء.',
+                'error'
+              );
             }
+          },
+          error: function (xhr) {
+            console.log("XHR Error:", xhr.responseJSON); // طباعة تفاصيل الخطأ في الكونسول
+
+            let errorMessage = 'حدث خطأ أثناء إلغاء الطلب.';
+
+            if (xhr.responseJSON) {
+              if (xhr.responseJSON.error) {
+                let errorDetails = xhr.responseJSON.error;
+                errorMessage = errorDetails.order_id ? errorDetails.order_id[0] : 'خطأ غير معروف.';
+              } else if (xhr.responseJSON.message) {
+                errorMessage = xhr.responseJSON.message;
+              }
+            }
+
+            Swal.fire(
+              'خطأ!',
+              errorMessage,
+              'error'
+            );
+          }
         });
+      } else {
+        Swal.fire(
+          'تم الإلغاء',
+          'لم يتم إلغاء الطلب.',
+          'info'
+        );
+      }
     });
+  });
+
+  // التحقق من التوكن عند تحميل الصفحة
+  window.onload = function () {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      window.location.href = "login.html";
+    }
+  };
+
+  // فتح قسم الطلبات عند الضغط على الزر
+  $('.current-orders').click(function () {
+    $('.info-parent').css('display', 'none');
+    $('#orders-container').css('display', 'block');
+  });
+
+  // إلغاء الطلب عند الضغط على زر محدد
+  $('#cancel-order-son').on('click', function () {
+    let order_id = localStorage.getItem('order_id'); // الحصول على order_id من LocalStorage
+    let token = localStorage.getItem('token'); // الحصول على التوكن
+
+    Swal.fire({
+      title: 'هل أنت متأكد من إلغاء الطلب؟',
+      text: 'لا يمكنك التراجع عن هذا الإجراء!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'تأكيد',
+      cancelButtonText: 'إلغاء',
+      reverseButtons: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        $.ajax({
+          url: `https://khaleiatnahel.com/beehive/api/orders_cancel/${order_id}`,
+          type: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          },
+          success: function (response) {
+            console.log("API Response:", response); // التأكد من شكل الاستجابة
+
+            if (response.status === "success") {
+              Swal.fire(
+                'تم الإلغاء!',
+                response.message || 'تم إلغاء الطلب بنجاح.',
+                'success'
+              );
+            } else {
+              Swal.fire(
+                'خطأ!',
+                response.message || 'حدث خطأ أثناء الإلغاء.',
+                'error'
+              );
+            }
+          },
+          error: function (xhr) {
+            console.log("XHR Error:", xhr.responseJSON); // طباعة تفاصيل الخطأ
+
+            let errorMessage = 'حدث خطأ أثناء إلغاء الطلب.';
+            if (xhr.responseJSON) {
+              if (xhr.responseJSON.error) {
+                let errorDetails = xhr.responseJSON.error;
+                errorMessage = errorDetails.order_id ? errorDetails.order_id[0] : 'خطأ غير معروف.';
+              } else if (xhr.responseJSON.message) {
+                errorMessage = xhr.responseJSON.message;
+              }
+            }
+
+            Swal.fire(
+              'خطأ!',
+              errorMessage,
+              'error'
+            );
+          }
+        });
+      } else {
+        Swal.fire(
+          'تم الإلغاء',
+          'لم يتم إلغاء الطلب.',
+          'info'
+        );
+      }
+    });
+  });
+
 
     // فتح قسم الطلبات عند الضغط على الزر
     $('.current-orders').click(function () {
